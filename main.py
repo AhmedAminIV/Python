@@ -40,7 +40,7 @@ class HomeScreen(QDialog):
                     self.ranks += [intRank]
                     self.teamError.setText('')
                     self.team_dict += [{"name": name, "rank": rank}]
-                    self.teams += [name]
+                    self.teams += [[name]]
                     self.loadData()
                 else:
                     self.teamError.setText('rank must be integer')
@@ -78,6 +78,7 @@ class HomeScreen(QDialog):
         groups.teams = self.teams
         groups.createTiers()
         print('tiers created')################
+        print(self.teams)
         groups.insertTables()
         print('table inserted')########################
         widget.addWidget(groups)
@@ -121,22 +122,21 @@ class GroupStage(QDialog):
             self.TableF.setRowCount(i+1)
             self.TableG.setRowCount(i+1)
             self.TableH.setRowCount(i+1)
-            print(self.teamTables)
-            self.TableA.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][0]))
+            self.TableA.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][0][0]))
             self.TableA.setItem(i, 1, QtWidgets.QTableWidgetItem(str(0)))
-            self.TableB.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][1]))
+            self.TableB.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][1][0]))
             self.TableB.setItem(i, 1, QtWidgets.QTableWidgetItem(str(0)))
-            self.TableC.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][2]))
+            self.TableC.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][2][0]))
             self.TableC.setItem(i, 1, QtWidgets.QTableWidgetItem(str(0)))
-            self.TableD.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][3]))
+            self.TableD.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][3][0]))
             self.TableD.setItem(i, 1, QtWidgets.QTableWidgetItem(str(0)))
-            self.TableE.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][4]))
+            self.TableE.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][4][0]))
             self.TableE.setItem(i, 1, QtWidgets.QTableWidgetItem(str(0)))
-            self.TableF.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][5]))
+            self.TableF.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][5][0]))
             self.TableF.setItem(i, 1, QtWidgets.QTableWidgetItem(str(0)))
-            self.TableG.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][6]))
+            self.TableG.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][6][0]))
             self.TableG.setItem(i, 1, QtWidgets.QTableWidgetItem(str(0)))
-            self.TableH.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][7]))
+            self.TableH.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][7][0]))
             self.TableH.setItem(i, 1, QtWidgets.QTableWidgetItem(str(0)))
 
 
