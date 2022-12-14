@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1199</width>
+    <height>860</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QWidget" name="HomeWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1200</width>
+     <height>860</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QWidget#HomeWidget{
+background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(110, 236, 255, 67), stop:0.115789 rgba(112, 186, 255, 145), stop:0.252632 rgba(157, 212, 255, 69), stop:0.263158 rgba(139, 224, 255, 69), stop:0.336842 rgba(0, 102, 255, 145), stop:0.436842 rgba(110, 94, 255, 208), stop:0.477581 rgba(143, 158, 255, 130), stop:0.484211 rgba(129, 201, 250, 130), stop:0.521053 rgba(118, 152, 255, 130), stop:0.526316 rgba(167, 255, 253, 130), stop:0.594737 rgba(130, 180, 255, 255), stop:0.684211 rgba(110, 157, 255, 69), stop:0.815789 rgba(123, 135, 255, 145), stop:0.936842 rgba(123, 171, 255, 130), stop:1 rgba(54, 131, 216, 171))}
+
+
+</string>
+   </property>
+   <widget class="QTableWidget" name="teamsTable">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>130</y>
+      <width>840</width>
+      <height>601</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>840</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>11</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QTableWidget{	
+border: 2px solid #803CE0;
+border-radius: 10px;
+color:rgb(255, 255, 255);
+color:rgb(0,0,0);
+font-family: Arial;
+font: 11pt;
+background-color:rgb(71, 142, 255);
+alternate-background-color:rgb(44, 94, 212);
+}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::HLine</enum>
+    </property>
+    <property name="lineWidth">
+     <number>4</number>
+    </property>
+    <property name="midLineWidth">
+     <number>2</number>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="sizeAdjustPolicy">
+     <enum>QAbstractScrollArea::AdjustToContents</enum>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
+    </property>
+    <property name="alternatingRowColors">
+     <bool>true</bool>
+    </property>
+    <property name="showGrid">
+     <bool>true</bool>
+    </property>
+    <property name="sortingEnabled">
+     <bool>true</bool>
+    </property>
+    <property name="rowCount">
+     <number>0</number>
+    </property>
+    <attribute name="horizontalHeaderVisible">
+     <bool>true</bool>
+    </attribute>
+    <attribute name="horizontalHeaderCascadingSectionResizes">
+     <bool>true</bool>
+    </attribute>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>300</number>
+    </attribute>
+    <attribute name="horizontalHeaderHighlightSections">
+     <bool>true</bool>
+    </attribute>
+    <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="horizontalHeaderStretchLastSection">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="verticalHeaderVisible">
+     <bool>true</bool>
+    </attribute>
+    <attribute name="verticalHeaderCascadingSectionResizes">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="verticalHeaderDefaultSectionSize">
+     <number>30</number>
+    </attribute>
+    <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+     <bool>false</bool>
+    </attribute>
+    <column>
+     <property name="text">
+      <string>Team Name</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Yu Gothic</family>
+       <pointsize>11</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Rank</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Yu Gothic Medium</family>
+       <pointsize>11</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+       <kerning>true</kerning>
+      </font>
+     </property>
+     <property name="textAlignment">
+      <set>AlignLeading|AlignTop</set>
+     </property>
+    </column>
+   </widget>
+   <widget class="QLineEdit" name="teamNameField">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>130</y>
+      <width>161</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit{
+background: #F8EAFF;
+border: 2px solid #803CE0;
+border-radius: 10px;
+color:#803CE0;
+font-family: Arial;
+font: 11pt;
+}
+QLineEdit:focus{
+border: 2px solid #FBAD25;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>85</y>
+      <width>151</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 16pt &quot;Unispace&quot;;
+color:rgb(71, 142, 255);</string>
+    </property>
+    <property name="text">
+     <string>Team Name</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>85</y>
+      <width>71</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 16pt &quot;Unispace&quot;;
+color:rgb(71, 142, 255);</string>
+    </property>
+    <property name="text">
+     <string>Rank</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="teamRankField">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>130</y>
+      <width>51</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit{
+background: #F8EAFF;
+border: 2px solid #803CE0;
+border-radius: 10px;
+color:#803CE0;
+font-family: Arial;
+font: 11pt;
+}
+QLineEdit:focus{
+border: 2px solid #FBAD25;
+}</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="insertTeamButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>260</y>
+      <width>301</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+	background-color:rgb(71, 142, 255);
+	border-radius: 10px;
+	font: 75 16pt &quot;Unispace&quot;;
+	color: white;
+
+}
+QPushButton:hover{
+	background-color: rgb(193,81,241);
+}</string>
+    </property>
+    <property name="text">
+     <string>Instert team</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="teamError">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>210</y>
+      <width>301</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 10pt, Arial;
+color: Red;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="groupError">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>600</y>
+      <width>321</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 10pt, Arial;
+color: Red;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="createGroupsButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>690</y>
+      <width>301</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+	background-color:rgb(71, 142, 255);
+	border-radius: 10px;
+	font: 75 16pt &quot;Unispace&quot;;
+	color: white;
+
+}
+QPushButton:hover{
+	background-color: rgb(193,81,241);
+}</string>
+    </property>
+    <property name="text">
+     <string>Create Groups</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>85</y>
+      <width>821</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 16pt &quot;Unispace&quot;;
+color:rgb(158, 200, 255);
+</string>
+    </property>
+    <property name="text">
+     <string>TEAMS</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>10</y>
+      <width>531</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 24pt &quot;Unispace&quot;;
+color:rgb(225, 43, 116);
+</string>
+    </property>
+    <property name="text">
+     <string>2 Teams</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>10</y>
+      <width>531</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 24pt &quot;Unispace&quot;;
+color:rgb(52, 77, 189);
+</string>
+    </property>
+    <property name="text">
+     <string>Insert 3</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
