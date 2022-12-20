@@ -1,10 +1,12 @@
+#       Team 14 - Tournament Gui
+
+
 import sys
 from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QDialog, QApplication, QWidget
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QDialog, QApplication, QWidget, QTableWidgetItem, QTableWidget, QMessageBox
 from random import shuffle
-from random import randint
+
 
 class HomeScreen(QDialog):
     def __init__(self):
@@ -13,17 +15,35 @@ class HomeScreen(QDialog):
         self.teamsTable.setColumnWidth(0, 600)
         self.teamsTable.setColumnWidth(1, 210)
         self.insertTeamButton.clicked.connect(self.insert)
+        self.autofillButton.clicked.connect(self.autofillData)
         self.team_dict = []
+        self.initTeams = [{'name': 'Brazil', 'rank': 1}, {'name': 'Belgium', 'rank': 2},
+                          {'name': 'Argentina', 'rank': 3}, {'name': 'France', 'rank': 4},
+                          {'name': 'England', 'rank': 5}, {'name': 'Spain', 'rank': 7},
+                          {'name': 'Netherlands', 'rank': 8}, {'name': 'Portugal', 'rank': 9},
+                          {'name': 'Denmark', 'rank': 10}, {'name': 'Germany', 'rank': 11},
+                          {'name': 'Croatia', 'rank': 12}, {'name': 'Mexico', 'rank': 13},
+                          {'name': 'Uruguay', 'rank': 14}, {'name': 'Switzerland', 'rank': 15},
+                          {'name': 'USA', 'rank': 16}, {'name': 'Senegal', 'rank': 18},
+                          {'name': 'Wales', 'rank': 19}, {'name': 'Iran', 'rank': 20},
+                          {'name': 'Serbia', 'rank': 21}, {'name': 'Morocco', 'rank': 22},
+                          {'name': 'Japan', 'rank': 24}, {'name': 'Poland', 'rank': 26},
+                          {'name': 'South Korea', 'rank': 28}, {'name': 'Tunisia', 'rank': 30},
+                          {'name': 'Costa Rica', 'rank': 31}, {'name': 'Australia', 'rank': 38},
+                          {'name': 'Canada', 'rank': 41}, {'name': 'Cameroon', 'rank': 43},
+                          {'name': 'Ecuador', 'rank': 44}, {'name': 'Qatar', 'rank': 50},
+                          {'name': 'Ghana', 'rank': 61}, {'name': 'Saudi Arabia', 'rank': 51}]
         self.teams = []
-        self.ranks = []
         self.tier1 = []
         self.tier2 = []
         self.tier3 = []
         self.tier4 = []
-
+        self.next_btn = False
         self.row = 0
         self.createGroupsButton.clicked.connect(self.gotosort)
+        self.nextButton.clicked.connect(self.gotoGroupPage)
 
+    # insert data into list and dictionary
     def insert(self):
         name = self.teamNameField.text()
         rank = self.teamRankField.text()
@@ -36,15 +56,15 @@ class HomeScreen(QDialog):
                 self.teamError.setText('the list is Full')
             else:
                 if rank.isdigit():
-                    intRank = int(rank)
-                    self.ranks += [intRank]
+                    int_rank = int(rank)
                     self.teamError.setText('')
                     self.team_dict += [{"name": name, "rank": rank}]
-                    self.teams += [[name]]
+                    self.teams += [[name, 0, int_rank]]
                     self.loadData()
                 else:
                     self.teamError.setText('rank must be integer')
 
+    # load date into the GUI table
     def loadData(self):
         if self.row < 32:
             curr = self.row + 1
@@ -53,38 +73,65 @@ class HomeScreen(QDialog):
             self.teamsTable.setItem(self.row, 1, QtWidgets.QTableWidgetItem(self.team_dict[self.row]['rank']))
             self.row = curr
 
+    # insert predefined into the list and loading it into the GUI table
+    def autofillData(self):
+        self.teamsTable.setRowCount(32)
+        for i in range(self.row, 32):
+            self.teamsTable.setItem(i, 0, QtWidgets.QTableWidgetItem(self.initTeams[i]['name']))
+            self.teamsTable.setItem(i, 1, QtWidgets.QTableWidgetItem(str(self.initTeams[i]['rank'])))
+            self.teams += [[self.initTeams[i]['name'], 0, self.initTeams[i]['rank']]]
+        self.row = 32
+
+    # sorting the list : 'teams' and redirecting into the Groups GUI
     def gotosort(self):
-        if self.row < 4:    # edit it later to 32
+        if self.row < 32:
             self.groupError.setText('Please enter all teams first')
         else:
-            self.sortTeams(self.ranks, self.teams)
-            self.gotoGroups()
+            self.teams.sort(key=lambda x: x[2])  # sorting the list depending on its 3rd element (rank)
+            self.showWarning()
+            self.groupError.setText('')
 
-    def sortTeams(self, array1, array2):
-        size = len(array1)
-        for ind in range(size):
-            min_index = ind
-
-            for j in range(ind + 1, size):
-                # select the minimum element in every iteration
-                if array1[j] < array1[min_index]:
-                    min_index = j
-            # swapping the elements to sort the array
-            (array1[ind], array1[min_index]) = (array1[min_index], array1[ind])
-            (array2[ind], array2[min_index]) = (array2[min_index], array2[ind])
-
-    def gotoGroups(self):
+    # Creates a group object
+    def createGroups(self):
+        if self.next_btn:
+            widget.removeWidget(widget.widget(1))
+        self.next_btn = True
         groups = GroupStage()
         groups.teams = self.teams
         groups.createTiers()
-        print('tiers created')################
-        print(self.teams)
-        groups.insertTables()
-        print('table inserted')########################
         widget.addWidget(groups)
-        widget.setCurrentIndex(widget.currentIndex()+1)
+
+    # show warning before creating data
+    def showWarning(self):
+        msg = QMessageBox()
+        msg.setWindowTitle('Warning!!')
+        msg.setText('All the previous data will be lost!')
+        msg.setIcon(QMessageBox.Warning)
+        msg.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
+        msg.setDefaultButton(QMessageBox.Yes)
+        msg.setEscapeButton(QMessageBox.Cancel)
+        msg.setInformativeText('Would you like to continue ?!')
+        msg.buttonClicked.connect(self.popup_button)
+        if self.next_btn:
+            x = msg.exec_()
+        else :
+            self.createGroups()
+
+    # Pop up window's Action if 'yes' was pressed
+    def popup_button(self, i):
+        if i.text() == '&Yes':
+            self.createGroups()
+
+    # Back to home page
+    def gotoGroupPage(self):
+        if not self.next_btn:
+            self.groupError.setText('Please create groups first')
+        else:
+            widget.setCurrentIndex(widget.currentIndex() + 1)
+            self.groupError.setText('')
 
 
+# GroupStageUi class
 class GroupStage(QDialog):
     def __init__(self):
         super(GroupStage, self).__init__()
@@ -97,6 +144,11 @@ class GroupStage(QDialog):
         self.tier3 = []
         self.tier4 = []
 
+        # button to back to the homepage
+        self.backButton.clicked.connect(self.goback)
+
+    # input : team list
+    # output : slice the team list, then shuffle it and append it into one suitable list
     def createTiers(self):
         self.tier1 = self.teams[0:8]
         self.tier2 = self.teams[8:16]
@@ -110,35 +162,25 @@ class GroupStage(QDialog):
         self.teamTables.append(self.tier2)
         self.teamTables.append(self.tier3)
         self.teamTables.append(self.tier4)
+        print(self.teamTables)
+        self.insetTables()
 
-    def insertTables(self):
-        print('we came here') ##########################
-        for i in range(4):
-            self.TableA.setRowCount(i+1)
-            self.TableB.setRowCount(i+1)
-            self.TableC.setRowCount(i+1)
-            self.TableD.setRowCount(i+1)
-            self.TableE.setRowCount(i+1)
-            self.TableF.setRowCount(i+1)
-            self.TableG.setRowCount(i+1)
-            self.TableH.setRowCount(i+1)
-            self.TableA.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][0][0]))
-            self.TableA.setItem(i, 1, QtWidgets.QTableWidgetItem(str(0)))
-            self.TableB.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][1][0]))
-            self.TableB.setItem(i, 1, QtWidgets.QTableWidgetItem(str(0)))
-            self.TableC.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][2][0]))
-            self.TableC.setItem(i, 1, QtWidgets.QTableWidgetItem(str(0)))
-            self.TableD.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][3][0]))
-            self.TableD.setItem(i, 1, QtWidgets.QTableWidgetItem(str(0)))
-            self.TableE.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][4][0]))
-            self.TableE.setItem(i, 1, QtWidgets.QTableWidgetItem(str(0)))
-            self.TableF.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][5][0]))
-            self.TableF.setItem(i, 1, QtWidgets.QTableWidgetItem(str(0)))
-            self.TableG.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][6][0]))
-            self.TableG.setItem(i, 1, QtWidgets.QTableWidgetItem(str(0)))
-            self.TableH.setItem(i, 0, QtWidgets.QTableWidgetItem(self.teamTables[i][7][0]))
-            self.TableH.setItem(i, 1, QtWidgets.QTableWidgetItem(str(0)))
+    # a function to automatically insert data into the group tables
+    def insetTables(self):
+        row_index = 0
+        for tiers in self.teamTables:
+            for team, tables in zip(tiers, self.GroupsWidget.findChildren(QTableWidget)):
+                tables.setRowCount(tables.rowCount() + 1)
+                col_index = 0
+                for info in team[:2]:
+                    item = QTableWidgetItem(str(info))
+                    tables.setItem(row_index, col_index, item)
+                    col_index += 1
+            row_index += 1
 
+    # go back to home page (stack widget)
+    def goback(self):
+        widget.setCurrentIndex(widget.currentIndex() - 1)
 
 
 # Main
