@@ -137,8 +137,7 @@ class GroupStage(QDialog):
         super(GroupStage, self).__init__()
         loadUi('GroupStage.ui', self)
         self.teams = []
-        self.teamTables = []
-        self.teamPoints = []
+        self.groups = []
         self.tier1 = []
         self.tier2 = []
         self.tier3 = []
@@ -158,29 +157,30 @@ class GroupStage(QDialog):
         shuffle(self.tier2)
         shuffle(self.tier3)
         shuffle(self.tier4)
-        self.teamTables.append(self.tier1)
-        self.teamTables.append(self.tier2)
-        self.teamTables.append(self.tier3)
-        self.teamTables.append(self.tier4)
-        print(self.teamTables)
-        self.insetTables()
+        self.createGroupTeams()
 
     # a function to automatically insert data into the group tables
-    def insetTables(self):
-        row_index = 0
-        for tiers in self.teamTables:
-            for team, tables in zip(tiers, self.GroupsWidget.findChildren(QTableWidget)):
+    def insertTables(self):
+        for grp, tables in zip(self.groups, self.GroupsWidget.findChildren(QTableWidget)):
+            row_index = 0
+            for team in grp:
                 tables.setRowCount(tables.rowCount() + 1)
                 col_index = 0
                 for info in team[:2]:
                     item = QTableWidgetItem(str(info))
                     tables.setItem(row_index, col_index, item)
                     col_index += 1
-            row_index += 1
+                row_index += 1
 
     # go back to home page (stack widget)
     def goback(self):
         widget.setCurrentIndex(widget.currentIndex() - 1)
+
+    # create a list of group teams and call the insert tables function
+    def createGroupTeams(self):
+        for i in range(8):
+            self.groups += [[self.tier1[i], self.tier2[i], self.tier3[i], self.tier4[i]]]
+        self.insertTables()
 
 
 # Main
