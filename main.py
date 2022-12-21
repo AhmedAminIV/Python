@@ -93,6 +93,7 @@ class HomeScreen(QDialog):
             self.teams.sort(key=lambda x: x[2])  # sorting the list depending on its 3rd element (rank)
             self.showWarning()
             self.groupError.setText('')
+        self.gotoGroupPage()
 
     # Creates a group object
     def createGroups(self):
@@ -101,6 +102,8 @@ class HomeScreen(QDialog):
         self.next_btn = True
         groups = GroupStage()
         groups.teams = self.teams
+        for team in groups.teams:
+            team[1] = 0
         groups.createTiers()
         widget.addWidget(groups)
 
@@ -115,6 +118,7 @@ class HomeScreen(QDialog):
         msg.setEscapeButton(QMessageBox.Cancel)
         msg.setInformativeText('Would you like to continue ?!')
         msg.buttonClicked.connect(self.popup_button)
+        
         if self.next_btn:
             x = msg.exec_()
         else:
@@ -146,6 +150,7 @@ class GroupStage(QDialog):
         self.tier2 = []  # temp list to have the second tier shuffled
         self.tier3 = []  # temp list to have the third tier shuffled
         self.tier4 = []  # temp list to have the fourth tier shuffled
+        self.round16_matches = []
         self.sorted_groups = []  # group based list (8 groups) each group has 4 teams (sorted)
         self.qualified_teams = []
         self.backButton.clicked.connect(self.goback)        # button to back to the homepage
@@ -267,7 +272,11 @@ class GroupStage(QDialog):
         for grp in self.sorted_groups:
             for team in grp[:2]:
                 self.qualified_teams += [team]
-        print('Qualified teams are:', self.qualified_teams)
+        for i in range(0 , len(self.qualified_teams) , 4 ):
+            self.round16_matches += [[self.qualified_teams[i] , self.qualified_teams[i+3]]]
+            self.round16_matches += [[self.qualified_teams[i+1] , self.qualified_teams[i+2]]]
+        print("round 16 matches: " , self.round16_matches)
+        self.createRound16()
 
     # loading score from the gui into the (groups_teams) list ----> (gameResult)
     def loadScores(self):
@@ -366,7 +375,87 @@ class GroupStage(QDialog):
 
         self.verticalLayout_4.addWidget(self.frame)
         self.verticalLayout_4.setSpacing(50)
+    
+    def createRound16(self):
 
+        for match in self.round16_matches:
+            self.createRound16Frame(match[0][0] , match[1][0])
+            print(match[0][0] , match[1][0])
+        
+    def createRound16Frame(self, team1, team2, score1='-', score2='-'):
+        frame_name = 'Match_' + str(self.matches)
+        self.matches += 1
+        self.frame = QFrame(self.scrollAreaWidgetContents)
+        self.frame.setObjectName(frame_name)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
+        self.frame.setSizePolicy(sizePolicy2)
+        self.frame.setMinimumSize(QSize(100, 65))
+        self.frame.setFrameShape(QFrame.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Raised)
+        self.team1 = QLabel(self.frame)
+        self.team1.setObjectName(u"team1")
+        self.team1.setGeometry(QRect(40, 10, 351, 41))
+        self.team1.setStyleSheet(u"font: 75 12pt \"Unispace\";\n"
+                                 "color:rgb(255, 255, 255);\n"
+                                 "")
+        self.team1.setAlignment(Qt.AlignCenter)
+        self.team1.setText(f'(H) {team1}')
+        self.team2 = QLabel(self.frame)
+        self.team2.setObjectName(u"team2")
+        self.team2.setGeometry(QRect(680, 10, 351, 41))
+        self.team2.setStyleSheet(u"font: 75 12pt \"Unispace\";\n"
+                                 "color:rgb(255, 255, 255);\n"
+                                 "")
+        self.team2.setAlignment(Qt.AlignCenter)
+        self.team2.setText(f'{team2} (A)')
+        self.label_17 = QLabel(self.frame)
+        self.label_17.setObjectName(u"label_17")
+        self.label_17.setGeometry(QRect(480, 10, 111, 41))
+        self.label_17.setStyleSheet(u"font: 75 12pt \"Unispace\";\n"
+                                    "color:rgb(255, 255, 255);\n"
+                                    "")
+        self.label_17.setAlignment(Qt.AlignCenter)
+        self.label_17.setText('VS')
+        self.team1_score = QLineEdit(self.frame)
+        self.team1_score.setObjectName(u"team1_score")
+        self.team1_score.setGeometry(QRect(390, 10, 91, 41))
+        self.team1_score.setStyleSheet(u"QLineEdit{\n"
+                                       "background: #F8EAFF;\n"
+                                       "border: 2px solid #803CE0;\n"
+                                       "border-radius: 10px;\n"
+                                       "color:#803CE0;\n"
+                                       "font-family: Arial;\n"
+                                       "font: 11pt;\n"
+                                       "}\n"
+                                       "QLineEdit:focus{\n"
+                                       "border: 2px solid #FBAD25;\n"
+                                       "}")
+        self.team1_score.setText(score1)
+        self.team1_score.setEnabled(False)
+        self.team1_score.setAlignment(Qt.AlignCenter)
+        self.team2_score = QLineEdit(self.frame)
+        self.team2_score.setObjectName(u"team2_score")
+        self.team2_score.setGeometry(QRect(590, 10, 91, 41))
+        self.team2_score.setStyleSheet(u"QLineEdit{\n"
+                                       "background: #F8EAFF;\n"
+                                       "border: 2px solid #803CE0;\n"
+                                       "border-radius: 10px;\n"
+                                       "color:#803CE0;\n"
+                                       "font-family: Arial;\n"
+                                       "font: 11pt;\n"
+                                       "}\n"
+                                       "QLineEdit:focus{\n"
+                                       "border: 2px solid #FBAD25;\n"
+                                       "}")
+        self.team2_score.setText(score2)
+        self.team2_score.setEnabled(False)
+        self.team2_score.setAlignment(Qt.AlignCenter)
+
+        self.verticalLayout_6.addWidget(self.frame)
+        self.verticalLayout_6.setSpacing(50)
 
 # Main
 app = QApplication(sys.argv)

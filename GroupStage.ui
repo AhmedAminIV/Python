@@ -40,7 +40,7 @@
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <property name="tabsClosable">
       <bool>false</bool>
@@ -995,8 +995,8 @@ background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471,
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>98</width>
-               <height>28</height>
+               <width>1162</width>
+               <height>751</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_4"/>
@@ -1023,6 +1023,21 @@ QPushButton:hover{
            </widget>
           </item>
          </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="Round16">
+      <attribute name="title">
+       <string>Round 16</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QWidget" name="round16Widget" native="true">
+         <property name="styleSheet">
+          <string notr="true">background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471, y2:0.403636, stop:0 rgba(255, 255, 255, 255), stop:0.0105263 rgba(255, 255, 255, 255), stop:0.652632 rgba(0, 135, 181, 244))</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_6"/>
         </widget>
        </item>
       </layout>
