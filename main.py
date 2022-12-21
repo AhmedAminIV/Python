@@ -4,8 +4,11 @@
 import sys
 from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QDialog, QApplication, QWidget, QTableWidgetItem, QTableWidget, QMessageBox
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import QDialog, QApplication, QWidget, QTableWidgetItem, QTableWidget, QMessageBox, QFrame, \
+    QSizePolicy, QLabel, QLineEdit
 from random import shuffle
+from random import randint
 
 
 class HomeScreen(QDialog):
@@ -114,7 +117,7 @@ class HomeScreen(QDialog):
         msg.buttonClicked.connect(self.popup_button)
         if self.next_btn:
             x = msg.exec_()
-        else :
+        else:
             self.createGroups()
 
     # Pop up window's Action if 'yes' was pressed
@@ -136,18 +139,23 @@ class GroupStage(QDialog):
     def __init__(self):
         super(GroupStage, self).__init__()
         loadUi('GroupStage.ui', self)
-        self.teams = []
-        self.groups = []
-        self.tier1 = []
-        self.tier2 = []
-        self.tier3 = []
-        self.tier4 = []
-
-        # button to back to the homepage
-        self.backButton.clicked.connect(self.goback)
+        self.teams = []  # list with the 32 teams will be using it for making tiers
+        self.groups_teams = []  # a temporary list help to slice the games of each group separately
+        self.games_result = []  # 96 elements (game) each element has 2 value (team1 points - team2 points)
+        self.tier1 = []  # temp list to have the first tier shuffled
+        self.tier2 = []  # temp list to have the second tier shuffled
+        self.tier3 = []  # temp list to have the third tier shuffled
+        self.tier4 = []  # temp list to have the fourth tier shuffled
+        self.sorted_groups = []  # group based list (8 groups) each group has 4 teams (sorted)
+        self.qualified_teams = []
+        self.backButton.clicked.connect(self.goback)        # button to back to the homepage
+        self.Groups.setCurrentIndex(0)  # setting the group tab to be default
+        self.matches = 0  # counter for the matches (used for naming frames of every game)
+        self.saveButton.clicked.connect(self.clearPoints)  # save data button
+        self.qualifiedButton.clicked.connect(self.qualifiedTeams)       # round 16 button
 
     # input : team list
-    # output : slice the team list, then shuffle it and append it into one suitable list
+    # output : slice the team list, then shuffle it and append it into one suitable list --->(createGroupTeams)
     def createTiers(self):
         self.tier1 = self.teams[0:8]
         self.tier2 = self.teams[8:16]
@@ -161,10 +169,11 @@ class GroupStage(QDialog):
 
     # a function to automatically insert data into the group tables
     def insertTables(self):
-        for grp, tables in zip(self.groups, self.GroupsWidget.findChildren(QTableWidget)):
+        for grp, tables in zip(self.sorted_groups, self.GroupsWidget.findChildren(QTableWidget)):
             row_index = 0
             for team in grp:
-                tables.setRowCount(tables.rowCount() + 1)
+                if tables.rowCount() < 4:
+                    tables.setRowCount(tables.rowCount() + 1)
                 col_index = 0
                 for info in team[:2]:
                     item = QTableWidgetItem(str(info))
@@ -176,11 +185,187 @@ class GroupStage(QDialog):
     def goback(self):
         widget.setCurrentIndex(widget.currentIndex() - 1)
 
-    # create a list of group teams and call the insert tables function
+    # create a list of group teams with 0 points --->(insertTables & groupGames)
     def createGroupTeams(self):
         for i in range(8):
-            self.groups += [[self.tier1[i], self.tier2[i], self.tier3[i], self.tier4[i]]]
+            self.sorted_groups += [[self.tier1[i], self.tier2[i], self.tier3[i], self.tier4[i]]]
         self.insertTables()
+        self.groupGames()
+
+    # sorting each group in descending order (points) ---> (insertTables)
+    def sortGroups(self):
+        for grp in self.sorted_groups:
+            grp.sort(reverse=True, key=lambda x: int(x[1]))
+        self.insertTables()
+
+    # updates [overwrites] (games_result) list depending on matches results (group_games) ---> (updatePoints)
+    def gameResult(self):
+        self.games_result = []
+        for match in self.groups_teams:
+            points1 = 0
+            points2 = 0
+            if int(match[1]) > int(match[3]):
+                points1 += 3
+            elif int(match[3]) > int(match[1]):
+                points2 += 3
+            else:
+                points1 += 1
+                points2 += 1
+            self.games_result += [[points1, points2]]
+        self.updatePoints()
+
+    # create a 96-element list each representing a match
+    def groupGames(self):
+        for i in range(8):
+            for j in range(4):
+                for k in range(4):
+                    if k != j:
+                        team1 = self.sorted_groups[i][j][0]
+                        team2 = self.sorted_groups[i][k][0]
+                        self.groups_teams += [[team1, '0', team2, '0']]
+        self.showMatchHistory()
+
+    # update points list to be used in filling the group table's data  ---> (sortGroups)
+    def updatePoints(self):
+        self.sortAfterClear()
+        game_counter = 0  # starts at game 0 , ends at game 96 (to iterate the games result list)
+        for i in range(8):
+            for j in range(4):
+                for k in range(4):
+                    if k != j:
+                        # adding point1 to team 1
+                        self.sorted_groups[i][j][1] = str(int(self.sorted_groups[i][j][1]) +
+                                                          self.games_result[game_counter][0])
+                        # adding point2 to team 2
+                        self.sorted_groups[i][k][1] = str(int(self.sorted_groups[i][k][1]) +
+                                                          self.games_result[game_counter][1])
+                        game_counter += 1
+        self.sortGroups()
+
+    # create new matches (without scores) just Initialising using (createFrame)
+    def showMatchHistory(self):
+        for match in self.groups_teams:
+            # self.createFrame(match[0], match[2], str(match[1]), str(match[3]))
+            self.createFrame(match[0], match[2])
+
+    # clear points ---> (sortAfterClear)
+    def clearPoints(self):
+        for grp in self.sorted_groups:
+            for team in grp:
+                team[1] = '0'
+        self.sortAfterClear()
+        self.loadScores()
+
+    # getting teams in it is first order to keep having the same matches
+    def sortAfterClear(self):
+        for grp in self.sorted_groups:
+            grp.sort(key=lambda x: int(x[2]))
+
+    # selection
+    def qualifiedTeams(self):
+        self.qualified_teams = []
+        for grp in self.sorted_groups:
+            for team in grp[:2]:
+                self.qualified_teams += [team]
+        print('Qualified teams are:', self.qualified_teams)
+
+    # loading score from the gui into the (groups_teams) list ----> (gameResult)
+    def loadScores(self):
+        counter = 0
+        semiCounter = 0
+        for lineEdit in self.MatchesWidget.findChildren(QLineEdit):
+            if counter % 2 == 0:
+                if lineEdit.text().isdigit():
+                    self.groups_teams[semiCounter][1] = lineEdit.text()
+                else:
+                    rand = randint(0, 5)
+                    self.groups_teams[semiCounter][1] = str(rand)
+                    lineEdit.setText(str(rand))
+                counter += 1
+            else:
+                if lineEdit.text().isdigit():
+                    self.groups_teams[semiCounter][3] = lineEdit.text()
+                else:
+                    rand = randint(0, 5)
+                    self.groups_teams[semiCounter][3] = str(rand)
+                    lineEdit.setText(str(rand))
+                counter += 1
+                semiCounter += 1
+        self.gameResult()
+
+    # creating gui frame for 1 match
+    def createFrame(self, team1, team2, score1='-', score2='-'):
+        frame_name = 'Match_' + str(self.matches)
+        self.matches += 1
+        self.frame = QFrame(self.scrollAreaWidgetContents)
+        self.frame.setObjectName(frame_name)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
+        self.frame.setSizePolicy(sizePolicy2)
+        self.frame.setMinimumSize(QSize(100, 65))
+        self.frame.setFrameShape(QFrame.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Raised)
+        self.team1 = QLabel(self.frame)
+        self.team1.setObjectName(u"team1")
+        self.team1.setGeometry(QRect(40, 10, 351, 41))
+        self.team1.setStyleSheet(u"font: 75 12pt \"Unispace\";\n"
+                                 "color:rgb(255, 255, 255);\n"
+                                 "")
+        self.team1.setAlignment(Qt.AlignCenter)
+        self.team1.setText(f'(H) {team1}')
+        self.team2 = QLabel(self.frame)
+        self.team2.setObjectName(u"team2")
+        self.team2.setGeometry(QRect(680, 10, 351, 41))
+        self.team2.setStyleSheet(u"font: 75 12pt \"Unispace\";\n"
+                                 "color:rgb(255, 255, 255);\n"
+                                 "")
+        self.team2.setAlignment(Qt.AlignCenter)
+        self.team2.setText(f'{team2} (A)')
+        self.label_17 = QLabel(self.frame)
+        self.label_17.setObjectName(u"label_17")
+        self.label_17.setGeometry(QRect(480, 10, 111, 41))
+        self.label_17.setStyleSheet(u"font: 75 12pt \"Unispace\";\n"
+                                    "color:rgb(255, 255, 255);\n"
+                                    "")
+        self.label_17.setAlignment(Qt.AlignCenter)
+        self.label_17.setText('VS')
+        self.team1_score = QLineEdit(self.frame)
+        self.team1_score.setObjectName(u"team1_score")
+        self.team1_score.setGeometry(QRect(390, 10, 91, 41))
+        self.team1_score.setStyleSheet(u"QLineEdit{\n"
+                                       "background: #F8EAFF;\n"
+                                       "border: 2px solid #803CE0;\n"
+                                       "border-radius: 10px;\n"
+                                       "color:#803CE0;\n"
+                                       "font-family: Arial;\n"
+                                       "font: 11pt;\n"
+                                       "}\n"
+                                       "QLineEdit:focus{\n"
+                                       "border: 2px solid #FBAD25;\n"
+                                       "}")
+        self.team1_score.setText(score1)
+        self.team1_score.setAlignment(Qt.AlignCenter)
+        self.team2_score = QLineEdit(self.frame)
+        self.team2_score.setObjectName(u"team2_score")
+        self.team2_score.setGeometry(QRect(590, 10, 91, 41))
+        self.team2_score.setStyleSheet(u"QLineEdit{\n"
+                                       "background: #F8EAFF;\n"
+                                       "border: 2px solid #803CE0;\n"
+                                       "border-radius: 10px;\n"
+                                       "color:#803CE0;\n"
+                                       "font-family: Arial;\n"
+                                       "font: 11pt;\n"
+                                       "}\n"
+                                       "QLineEdit:focus{\n"
+                                       "border: 2px solid #FBAD25;\n"
+                                       "}")
+        self.team2_score.setText(score2)
+        self.team2_score.setAlignment(Qt.AlignCenter)
+
+        self.verticalLayout_4.addWidget(self.frame)
+        self.verticalLayout_4.setSpacing(50)
 
 
 # Main

@@ -284,8 +284,8 @@ color: Red;</string>
    <widget class="QLabel" name="groupError">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>600</y>
+      <x>10</x>
+      <y>640</y>
       <width>321</width>
       <height>51</height>
      </rect>
@@ -296,6 +296,9 @@ color: Red;</string>
     </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QPushButton" name="createGroupsButton">
