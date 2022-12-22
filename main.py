@@ -6,7 +6,7 @@ from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import QDialog, QApplication, QWidget, QTableWidgetItem, QTableWidget, QMessageBox, QFrame, \
-    QSizePolicy, QLabel, QLineEdit
+    QSizePolicy, QLabel, QLineEdit, QVBoxLayout
 from random import shuffle
 from random import randint
 
@@ -151,6 +151,7 @@ class GroupStage(QDialog):
         self.tier3 = []  # temp list to have the third tier shuffled
         self.tier4 = []  # temp list to have the fourth tier shuffled
         self.round16_matches = []
+        self.flag = True         # a flag to check if we need to create round 16 or just edit it
         self.sorted_groups = []  # group based list (8 groups) each group has 4 teams (sorted)
         self.qualified_teams = []
         self.backButton.clicked.connect(self.goback)        # button to back to the homepage
@@ -269,14 +270,15 @@ class GroupStage(QDialog):
     # selection
     def qualifiedTeams(self):
         self.qualified_teams = []
+        self.round16_matches = []
         for grp in self.sorted_groups:
             for team in grp[:2]:
                 self.qualified_teams += [team]
-        for i in range(0 , len(self.qualified_teams) , 4 ):
-            self.round16_matches += [[self.qualified_teams[i] , self.qualified_teams[i+3]]]
-            self.round16_matches += [[self.qualified_teams[i+1] , self.qualified_teams[i+2]]]
-        print("round 16 matches: " , self.round16_matches)
-        self.createRound16()
+        for i in range(0, len(self.qualified_teams), 4):
+            self.round16_matches += [[self.qualified_teams[i], self.qualified_teams[i+3]]]
+            self.round16_matches += [[self.qualified_teams[i+1], self.qualified_teams[i+2]]]
+        print("round 16 matches: ", self.round16_matches)
+        self.editRound16()
 
     # loading score from the gui into the (groups_teams) list ----> (gameResult)
     def loadScores(self):
@@ -376,16 +378,26 @@ class GroupStage(QDialog):
         self.verticalLayout_4.addWidget(self.frame)
         self.verticalLayout_4.setSpacing(50)
     
-    def createRound16(self):
+    # just editing the round 16 frames
+    def editRound16(self):
+        if self.flag:
+            self.createRound16()
+            self.flag = False
+        else:
+            j = 0
+            for i in range(0, len(self.round16Widget.findChildren(QFrame)), 4):
+                self.round16Widget.findChildren(QFrame)[i+1].setText(str(self.round16_matches[j][0][0]))
+                self.round16Widget.findChildren(QFrame)[i+2].setText(str(self.round16_matches[j][1][0]))
+                j += 1
 
+    def createRound16(self):
         for match in self.round16_matches:
-            self.createRound16Frame(match[0][0] , match[1][0])
-            print(match[0][0] , match[1][0])
-        
+            self.createRound16Frame(match[0][0], match[1][0])
+
     def createRound16Frame(self, team1, team2, score1='-', score2='-'):
         frame_name = 'Match_' + str(self.matches)
         self.matches += 1
-        self.frame = QFrame(self.scrollAreaWidgetContents)
+        self.frame = QFrame(self.round16Widget)
         self.frame.setObjectName(frame_name)
         sizePolicy2 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy2.setHorizontalStretch(0)
@@ -402,7 +414,7 @@ class GroupStage(QDialog):
                                  "color:rgb(255, 255, 255);\n"
                                  "")
         self.team1.setAlignment(Qt.AlignCenter)
-        self.team1.setText(f'(H) {team1}')
+        self.team1.setText(f'{team1}')
         self.team2 = QLabel(self.frame)
         self.team2.setObjectName(u"team2")
         self.team2.setGeometry(QRect(680, 10, 351, 41))
@@ -410,7 +422,7 @@ class GroupStage(QDialog):
                                  "color:rgb(255, 255, 255);\n"
                                  "")
         self.team2.setAlignment(Qt.AlignCenter)
-        self.team2.setText(f'{team2} (A)')
+        self.team2.setText(f'{team2}')
         self.label_17 = QLabel(self.frame)
         self.label_17.setObjectName(u"label_17")
         self.label_17.setGeometry(QRect(480, 10, 111, 41))

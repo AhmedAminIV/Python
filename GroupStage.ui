@@ -40,7 +40,7 @@
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="tabsClosable">
       <bool>false</bool>
@@ -938,9 +938,9 @@ alternate-background-color:rgb(44, 94, 212);
        <widget class="QPushButton" name="qualifiedButton">
         <property name="geometry">
          <rect>
-          <x>1030</x>
+          <x>900</x>
           <y>780</y>
-          <width>141</width>
+          <width>271</width>
           <height>41</height>
          </rect>
         </property>
@@ -957,7 +957,7 @@ QPushButton:hover{
 }</string>
         </property>
         <property name="text">
-         <string>Round 16</string>
+         <string>Update Round 16 teams</string>
         </property>
        </widget>
       </widget>
@@ -996,7 +996,7 @@ background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471,
                <x>0</x>
                <y>0</y>
                <width>1162</width>
-               <height>751</height>
+               <height>730</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_4"/>
