@@ -40,7 +40,7 @@
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <property name="tabsClosable">
       <bool>false</bool>
@@ -935,31 +935,6 @@ alternate-background-color:rgb(44, 94, 212);
          </property>
         </column>
        </widget>
-       <widget class="QPushButton" name="qualifiedButton">
-        <property name="geometry">
-         <rect>
-          <x>900</x>
-          <y>780</y>
-          <width>271</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton{
-	background-color:rgb(16, 176, 220);
-	border-radius: 10px;
-	font: 75 12pt &quot;Unispace&quot;;
-	color: white;
-
-}
-QPushButton:hover{
-	background-color: rgb(193,81,241);
-}</string>
-        </property>
-        <property name="text">
-         <string>Update Round 16 teams</string>
-        </property>
-       </widget>
       </widget>
      </widget>
      <widget class="QWidget" name="MatchesTab">
@@ -1029,15 +1004,231 @@ QPushButton:hover{
      </widget>
      <widget class="QWidget" name="Round16">
       <attribute name="title">
-       <string>Round 16</string>
+       <string>Round of 16</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
         <widget class="QWidget" name="round16Widget" native="true">
          <property name="styleSheet">
-          <string notr="true">background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471, y2:0.403636, stop:0 rgba(255, 255, 255, 255), stop:0.0105263 rgba(255, 255, 255, 255), stop:0.652632 rgba(0, 135, 181, 244))</string>
+          <string notr="true">QWidget#round16Widget{
+background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(110, 236, 255, 67), stop:0.115789 rgba(112, 186, 255, 145), stop:0.252632 rgba(157, 212, 255, 69), stop:0.263158 rgba(139, 224, 255, 69), stop:0.336842 rgba(0, 102, 255, 145), stop:0.436842 rgba(110, 94, 255, 208), stop:0.477581 rgba(143, 158, 255, 130), stop:0.484211 rgba(129, 201, 250, 130), stop:0.521053 rgba(118, 152, 255, 130), stop:0.526316 rgba(167, 255, 253, 130), stop:0.594737 rgba(130, 180, 255, 255), stop:0.684211 rgba(110, 157, 255, 69), stop:0.815789 rgba(123, 135, 255, 145), stop:0.936842 rgba(123, 171, 255, 130), stop:1 rgba(54, 131, 216, 171))
+}</string>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_6"/>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QScrollArea" name="scrollArea_2">
+            <property name="styleSheet">
+             <string notr="true">
+background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471, y2:0.403636, stop:0 rgba(255, 255, 255, 255), stop:0.0105263 rgba(255, 255, 255, 255), stop:0.652632 rgba(0, 135, 181, 244))</string>
+            </property>
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents_3">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>1162</width>
+               <height>730</height>
+              </rect>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_18">
+              <item>
+               <layout class="QVBoxLayout" name="round16Layout"/>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="round16Save">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+	background-color:rgb(16, 176, 220);
+	border-radius: 10px;
+	font: 75 12pt &quot;Unispace&quot;;
+	color: white;
+
+}
+QPushButton:hover{
+	background-color: rgb(193,81,241);
+}</string>
+            </property>
+            <property name="text">
+             <string>Save data</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="quarterFinal">
+      <attribute name="title">
+       <string>Quarter-finals</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <item>
+        <widget class="QScrollArea" name="quarterArea">
+         <property name="styleSheet">
+          <string notr="true">
+background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471, y2:0.403636, stop:0 rgba(255, 255, 255, 255), stop:0.0105263 rgba(255, 255, 255, 255), stop:0.652632 rgba(0, 135, 181, 244))</string>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="quarterWidget">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>1180</width>
+            <height>748</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_13">
+           <item>
+            <layout class="QVBoxLayout" name="quarterLayout"/>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="quarterSave">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+	background-color:rgb(16, 176, 220);
+	border-radius: 10px;
+	font: 75 12pt &quot;Unispace&quot;;
+	color: white;
+
+}
+QPushButton:hover{
+	background-color: rgb(193,81,241);
+}</string>
+         </property>
+         <property name="text">
+          <string>Save data</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="semiFinal">
+      <attribute name="title">
+       <string>Semi-finals</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_9">
+       <item>
+        <widget class="QScrollArea" name="scrollArea_4">
+         <property name="styleSheet">
+          <string notr="true">
+background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471, y2:0.403636, stop:0 rgba(255, 255, 255, 255), stop:0.0105263 rgba(255, 255, 255, 255), stop:0.652632 rgba(0, 135, 181, 244))</string>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="semiWidget">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>1180</width>
+            <height>748</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_15">
+           <item>
+            <layout class="QVBoxLayout" name="semiLayout"/>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="semiSave">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+	background-color:rgb(16, 176, 220);
+	border-radius: 10px;
+	font: 75 12pt &quot;Unispace&quot;;
+	color: white;
+
+}
+QPushButton:hover{
+	background-color: rgb(193,81,241);
+}</string>
+         </property>
+         <property name="text">
+          <string>Save data</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="Final">
+      <attribute name="title">
+       <string>Final</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <item>
+        <widget class="QScrollArea" name="scrollArea_3">
+         <property name="styleSheet">
+          <string notr="true">
+background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471, y2:0.403636, stop:0 rgba(255, 255, 255, 255), stop:0.0105263 rgba(255, 255, 255, 255), stop:0.652632 rgba(0, 135, 181, 244))</string>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="finalWidget">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>1180</width>
+            <height>748</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_11">
+           <item>
+            <layout class="QVBoxLayout" name="finalLayout"/>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="finalSave">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+	background-color:rgb(16, 176, 220);
+	border-radius: 10px;
+	font: 75 12pt &quot;Unispace&quot;;
+	color: white;
+
+}
+QPushButton:hover{
+	background-color: rgb(193,81,241);
+}</string>
+         </property>
+         <property name="text">
+          <string>Save data</string>
+         </property>
         </widget>
        </item>
       </layout>
