@@ -1,4 +1,9 @@
 #       Team 14 - Tournament Gui
+#       team members
+#       1- Ahmed Amin Ahmedsamy 2
+#       2- Ahmed Alaa el-din    13
+#       3- Ehab Tarek Shokri    34
+#       4- Ziad Mosaad El-sayed 48
 
 
 import sys
@@ -487,7 +492,7 @@ class GroupStage(QDialog):
             self.team1.setText(f'(H) {team1}')
             self.team2.setText(f'{team2} (A)')
         else:
-            self.team2.setText(f'{team2}')
+            self.team1.setText(f'{team1}')
             self.team2.setText(f'{team2}')
 
         self.label_17.setAlignment(Qt.AlignCenter)
