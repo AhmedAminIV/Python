@@ -40,7 +40,7 @@
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>5</number>
+      <number>1</number>
      </property>
      <property name="tabsClosable">
       <bool>false</bool>
@@ -974,12 +974,12 @@ background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471,
                <height>730</height>
               </rect>
              </property>
-             <layout class="QVBoxLayout" name="verticalLayout_4"/>
+             <layout class="QVBoxLayout" name="matchesLayout"/>
             </widget>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="saveButton">
+           <widget class="QPushButton" name="matchesSave">
             <property name="styleSheet">
              <string notr="true">QPushButton{
 	background-color:rgb(16, 176, 220);

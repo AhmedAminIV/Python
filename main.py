@@ -171,11 +171,15 @@ class GroupStage(QDialog):
         self.backButton.clicked.connect(self.goback)  # button to back to the homepage
         self.Groups.setCurrentIndex(0)  # setting the group tab to be default
         self.matches = 0  # counter for the matches (used for naming frames of every game)
-        self.saveButton.clicked.connect(self.clearPoints)  # save data (matches tab) button
+        self.matchesSave.clicked.connect(self.clearPoints)  # save data (matches tab) button
         self.round16Save.clicked.connect(self.load16Scores)
         self.quarterSave.clicked.connect(self.loadQuarterScores)
         self.semiSave.clicked.connect(self.loadSemiScores)
         self.finalSave.clicked.connect(self.loadFinalScores)
+
+    # go back to home page (stack widget)
+    def goback(self):
+        widget.setCurrentIndex(widget.currentIndex() - 1)
 
     # input : team list
     # output : slice the team list, then shuffle it and append it into one suitable list --->(createGroupTeams)
@@ -189,6 +193,13 @@ class GroupStage(QDialog):
         shuffle(self.tier3)
         shuffle(self.tier4)
         self.createGroupTeams()
+
+    # create a list of group teams with 0 points --->(insertTables & groupGames)
+    def createGroupTeams(self):
+        for i in range(8):
+            self.sorted_groups += [[self.tier1[i], self.tier2[i], self.tier3[i], self.tier4[i]]]
+        self.insertTables()
+        self.groupGames()
 
     # a function to automatically insert data into the group tables
     def insertTables(self):
@@ -204,23 +215,6 @@ class GroupStage(QDialog):
                     col_index += 1
                 row_index += 1
 
-    # go back to home page (stack widget)
-    def goback(self):
-        widget.setCurrentIndex(widget.currentIndex() - 1)
-
-    # create a list of group teams with 0 points --->(insertTables & groupGames)
-    def createGroupTeams(self):
-        for i in range(8):
-            self.sorted_groups += [[self.tier1[i], self.tier2[i], self.tier3[i], self.tier4[i]]]
-        self.insertTables()
-        self.groupGames()
-
-    # sorting each group in descending order (points) ---> (insertTables)
-    def sortGroups(self):
-        for grp in self.sorted_groups:
-            grp.sort(reverse=True, key=lambda x: int(x[1]))
-        self.insertTables()
-
     # create a 96-element list each representing a match
     def groupGames(self):
         for i in range(8):
@@ -230,13 +224,14 @@ class GroupStage(QDialog):
                         team1 = self.sorted_groups[i][j][0]
                         team2 = self.sorted_groups[i][k][0]
                         self.groups_teams += [[team1, '0', team2, '0']]
-        self.showMatchHistory()
+        # create new matches (without scores) just Initialising using (createFrame)
+        self.createWidget(self.groups_teams, self.matchesLayout, self.matchesSave, homeAway=True)
 
-    # create new matches (without scores) just Initialising using (createFrame)
-    def showMatchHistory(self):
-        for match in self.groups_teams:
-            # self.createFrame(match[0], match[2], str(match[1]), str(match[3]))
-            self.createFrame(match[0], match[2])
+    # sorting each group in descending order (points) ---> (insertTables)
+    def sortGroups(self):
+        for grp in self.sorted_groups:
+            grp.sort(reverse=True, key=lambda x: int(x[1]))
+        self.insertTables()
 
     # clear points ---> (sortAfterClear)
     def clearPoints(self):
@@ -254,27 +249,7 @@ class GroupStage(QDialog):
         # loading score of the main group games from the gui into the (groups_teams) list ----> (gameResult)
 
     def loadScores(self):
-        counter = 0
-        semiCounter = 0
-        for lineEdit in self.MatchesWidget.findChildren(QLineEdit):
-            if counter % 2 == 0:
-                if lineEdit.text().isdigit():
-                    self.groups_teams[semiCounter][1] = lineEdit.text()
-                else:
-                    rand = randint(0, 5)
-                    self.groups_teams[semiCounter][1] = str(rand)
-                    lineEdit.setText(str(rand))
-                counter += 1
-            else:
-                if lineEdit.text().isdigit():
-                    self.groups_teams[semiCounter][3] = lineEdit.text()
-                else:
-                    rand = randint(0, 5)
-                    self.groups_teams[semiCounter][3] = str(rand)
-                    lineEdit.setText(str(rand))
-                counter += 1
-                semiCounter += 1
-        self.gameResult()
+        self.loadScore(self.MatchesWidget, self.groups_teams, self.gameResult, draw_allowance=True)
 
     # updates [overwrites] (games_result) list depending on matches results (group_games) ---> (updatePoints)
     def gameResult(self):
@@ -322,14 +297,9 @@ class GroupStage(QDialog):
             self.round16_matches += [[self.qualified_teams[i + 1][0], '0', self.qualified_teams[i + 2][0], '0']]
         self.editRound16()
 
-    def createRound16(self):
-        for match in self.round16_matches:
-            self.createRound16Frame(match[0], match[2])
-        self.round16Save.setEnabled(True)
-
     def editRound16(self):
         if self.round16Flag:
-            self.createRound16()
+            self.createWidget(self.round16_matches, self.round16Layout, self.round16Save)
             self.round16Flag = False
         else:
             j = 0
@@ -339,49 +309,12 @@ class GroupStage(QDialog):
                 j += 1
 
     def load16Scores(self):
-        counter = 0
-        semiCounter = 0
-        for lineEdit in self.round16Widget.findChildren(QLineEdit):
-            if counter % 2 == 0:
-                if lineEdit.text().isdigit():
-                    self.round16_matches[semiCounter][1] = lineEdit.text()
-                else:
-                    rand = randint(0, 5)
-                    self.round16_matches[semiCounter][1] = str(rand)
-                    lineEdit.setText(str(rand))
-                counter += 1
-            else:
-                if lineEdit.text().isdigit():
-                    self.round16_matches[semiCounter][3] = lineEdit.text()
-                else:
-                    rand = randint(0, 5)
-                    self.round16_matches[semiCounter][3] = str(rand)
-                    lineEdit.setText(str(rand))
-                if self.round16_matches[semiCounter][3] == self.round16_matches[semiCounter][1]:
-                    rand1 = randint(0, 5)
-                    rand2 = randint(0, 5)
-                    while abs(rand1 - rand2) < 3 and rand1 == rand2:
-                        rand1 = randint(0, 5)
-                        rand2 = randint(0, 5)
-                    self.round16_matches[semiCounter][1] = rand1
-                    self.round16_matches[semiCounter][3] = rand2
-                    lineEdit.setText(f'{lineEdit.text()} ({rand2})')
-                    self.round16Widget.findChildren(QLineEdit)[counter-1].setText(
-                        f'{self.round16Widget.findChildren(QLineEdit)[counter-1].text()} ({rand1})')
-                counter += 1
-                semiCounter += 1
-        self.round16_winners = self.koWinner(self.round16_matches)
-        self.quarter_matches = self.creatKoMatches(self.round16_winners)
-        self.editQuarter()
-
-    def createQuarter(self):
-        for match in self.quarter_matches:
-            self.createQuarterFrame(match[0], match[2])
-        self.quarterSave.setEnabled(True)
+        self.loadScore(self.round16Widget, self.round16_matches, self.editQuarter, round_winner=self.quarter_winners,
+                       nxt_round_matches=self.quarter_matches)
 
     def editQuarter(self):
         if self.quarterFlag:
-            self.createQuarter()
+            self.createWidget(self.quarter_matches, self.quarterLayout, self.quarterSave)
             self.quarterFlag = False
         else:
             j = 0
@@ -391,49 +324,12 @@ class GroupStage(QDialog):
                 j += 1
 
     def loadQuarterScores(self):
-        counter = 0
-        semiCounter = 0
-        for lineEdit in self.quarterWidget.findChildren(QLineEdit):
-            if counter % 2 == 0:
-                if lineEdit.text().isdigit():
-                    self.quarter_matches[semiCounter][1] = lineEdit.text()
-                else:
-                    rand = randint(0, 5)
-                    self.quarter_matches[semiCounter][1] = str(rand)
-                    lineEdit.setText(str(rand))
-                counter += 1
-            else:
-                if lineEdit.text().isdigit():
-                    self.quarter_matches[semiCounter][3] = lineEdit.text()
-                else:
-                    rand = randint(0, 5)
-                    self.quarter_matches[semiCounter][3] = str(rand)
-                    lineEdit.setText(str(rand))
-                if self.quarter_matches[semiCounter][3] == self.quarter_matches[semiCounter][1]:
-                    rand1 = randint(0, 5)
-                    rand2 = randint(0, 5)
-                    while abs(rand1 - rand2) < 3 and rand1 == rand2:
-                        rand1 = randint(0, 5)
-                        rand2 = randint(0, 5)
-                    self.quarter_matches[semiCounter][1] = rand1
-                    self.quarter_matches[semiCounter][3] = rand2
-                    lineEdit.setText(f'{lineEdit.text()} ({rand2})')
-                    self.quarterWidget.findChildren(QLineEdit)[counter-1].setText(
-                        f'{self.quarterWidget.findChildren(QLineEdit)[counter-1].text()} ({rand1})')
-                counter += 1
-                semiCounter += 1
-        self.quarter_winners = self.koWinner(self.quarter_matches)
-        self.semi_matches = self.creatKoMatches(self.quarter_winners)
-        self.editSemi()
-
-    def createSemi(self):
-        for match in self.semi_matches:
-            self.createSemiFrame(match[0], match[2])
-        self.semiSave.setEnabled(True)
+        self.loadScore(self.quarterWidget, self.quarter_matches, self.editSemi, round_winner=self.quarter_winners,
+                       nxt_round_matches=self.semi_matches)
 
     def editSemi(self):
         if self.semiFlag:
-            self.createSemi()
+            self.createWidget(self.semi_matches, self.semiLayout, self.semiSave)
             self.semiFlag = False
         else:
             j = 0
@@ -443,50 +339,40 @@ class GroupStage(QDialog):
                 j += 1
 
     def loadSemiScores(self):
-        counter = 0
-        semiCounter = 0
-        for lineEdit in self.semiWidget.findChildren(QLineEdit):
-            if counter % 2 == 0:
-                if lineEdit.text().isdigit():
-                    self.semi_matches[semiCounter][1] = lineEdit.text()
-                else:
-                    rand = randint(0, 5)
-                    self.semi_matches[semiCounter][1] = str(rand)
-                    lineEdit.setText(str(rand))
-                counter += 1
-            else:
-                if lineEdit.text().isdigit():
-                    self.semi_matches[semiCounter][3] = lineEdit.text()
-                else:
-                    rand = randint(0, 5)
-                    self.semi_matches[semiCounter][3] = str(rand)
-                    lineEdit.setText(str(rand))
-                if self.semi_matches[semiCounter][3] == self.semi_matches[semiCounter][1]:
-                    rand1 = randint(0, 5)
-                    rand2 = randint(0, 5)
-                    while abs(rand1 - rand2) < 3 and rand1 == rand2:
-                        rand1 = randint(0, 5)
-                        rand2 = randint(0, 5)
-                    self.semi_matches[semiCounter][1] = rand1
-                    self.semi_matches[semiCounter][3] = rand2
-                    lineEdit.setText(f'{lineEdit.text()} ({rand2})')
-                    self.semiWidget.findChildren(QLineEdit)[counter-1].setText(
-                        f'{self.semiWidget.findChildren(QLineEdit)[counter-1].text()} ({rand1})')
-                counter += 1
-                semiCounter += 1
-        self.semi_winners = self.koWinner(self.semi_matches)
-        self.semi_losers = self.koLosers(self.semi_matches)
+        self.loadScore(self.semiWidget, self.semi_matches, self.createFinalMatches, round_winner=self.semi_winners,
+                       semi=True, round_loser=self.semi_losers)
+
+    def createFinalMatches(self):
         self.first_place_match = [[self.semi_winners[0], '0', self.semi_winners[1], '0']]
         self.third_place_match = [[self.semi_losers[0], '0', self.semi_losers[1], '0']]
         self.final_matches = self.first_place_match + self.third_place_match
         self.editFinal()
 
-    def createFinal(self):
-        for match in self.final_matches:
-            self.createFinalFrame(match[0], match[2])
-        self.finalSave.setEnabled(True)
-
     def editFinal(self):
+        if self.finalFlag:
+            self.createWidget(self.final_matches, self.finalLayout, self.finalSave)
+            self.finalFlag = False
+        else:
+            j = 0
+            for i in range(0, len(self.finalWidget.findChildren(QLabel)), 3):
+                self.finalWidget.findChildren(QLabel)[i].setText(str(self.final_matches[j][0]))
+                self.finalWidget.findChildren(QLabel)[i + 1].setText(str(self.final_matches[j][2]))
+                j += 1
+
+    def loadFinalScores(self):
+        self.loadScore(self.finalWidget, self.final_matches, self.showWinners, round_winner=self.final_winners,
+                       semi=True, round_loser=self.final_losers)
+
+    def showWinners(self):
+        print(f'First place {self.final_winners[0]} \nSecond place {self.final_losers[0]}')
+        print(f'Third place {self.final_winners[1]} \nfourth place {self.final_losers[1]}')
+
+    def createWidget(self, matches_list, Layout, Btn, homeAway=False):
+        for match in matches_list:
+            self.createFrames(match[0], match[2], Layout, homeAway)
+        Btn.setEnabled(True)
+
+    def editWidget(self):
         if self.finalFlag:
             self.createFinal()
             self.finalFlag = False
@@ -497,42 +383,46 @@ class GroupStage(QDialog):
                 self.finalWidget.findChildren(QLabel)[i + 1].setText(str(self.final_matches[j][2]))
                 j += 1
 
-    def loadFinalScores(self):
+    def loadScore(self, widget, matches_list, nxt_round_func, round_winner=None, nxt_round_matches=None, semi=False,
+                  round_loser=None, draw_allowance=False):
         counter = 0
         semiCounter = 0
-        for lineEdit in self.finalWidget.findChildren(QLineEdit):
+        for lineEdit in widget.findChildren(QLineEdit):
             if counter % 2 == 0:
                 if lineEdit.text().isdigit():
-                    self.final_matches[semiCounter][1] = lineEdit.text()
+                    matches_list[semiCounter][1] = lineEdit.text()
                 else:
                     rand = randint(0, 5)
-                    self.final_matches[semiCounter][1] = str(rand)
+                    matches_list[semiCounter][1] = str(rand)
                     lineEdit.setText(str(rand))
                 counter += 1
             else:
                 if lineEdit.text().isdigit():
-                    self.final_matches[semiCounter][3] = lineEdit.text()
+                    matches_list[semiCounter][3] = lineEdit.text()
                 else:
                     rand = randint(0, 5)
-                    self.final_matches[semiCounter][3] = str(rand)
+                    matches_list[semiCounter][3] = str(rand)
                     lineEdit.setText(str(rand))
-                if self.final_matches[semiCounter][3] == self.final_matches[semiCounter][1]:
+                if matches_list[semiCounter][3] == matches_list[semiCounter][1] and not draw_allowance:
                     rand1 = randint(0, 5)
                     rand2 = randint(0, 5)
                     while abs(rand1 - rand2) < 3 and rand1 == rand2:
                         rand1 = randint(0, 5)
                         rand2 = randint(0, 5)
-                    self.final_matches[semiCounter][1] = rand1
-                    self.final_matches[semiCounter][3] = rand2
+                    matches_list[semiCounter][1] = rand1
+                    matches_list[semiCounter][3] = rand2
                     lineEdit.setText(f'{lineEdit.text()} ({rand2})')
-                    self.finalWidget.findChildren(QLineEdit)[counter-1].setText(
-                        f'{self.finalWidget.findChildren(QLineEdit)[counter-1].text()} ({rand1})')
+                    widget.findChildren(QLineEdit)[counter-1].setText(
+                        f'{widget.findChildren(QLineEdit)[counter-1].text()} ({rand1})')
                 counter += 1
                 semiCounter += 1
-        self.final_winners = self.koWinner(self.final_matches)
-        self.final_losers = self.koLosers(self.final_matches)
-        print(f'First place {self.final_winners[0]} \nSecond place {self.final_losers[0]}')
-        print(f'Third place {self.final_winners [1]} \nfourth place {self.final_losers [1]}')
+        if not draw_allowance:
+            round_winner[:] = self.koWinner(matches_list)
+            if semi:
+                round_loser[:] = self.koLosers(matches_list)
+            else:
+                nxt_round_matches[:] = self.creatKoMatches(round_winner)
+        nxt_round_func()
 
     def koWinner(self, matches_list):
         winners = []
@@ -559,7 +449,7 @@ class GroupStage(QDialog):
         return matches
 
     # creating gui frame for 1 match
-    def createFrame(self, team1, team2, score1='-', score2='-'):
+    def createFrames(self, team1, team2, widget, homeAway=False):
         frame_name = 'Match_' + str(self.matches)
         self.matches += 1
         self.frame = QFrame(self.scrollAreaWidgetContents)
@@ -587,13 +477,19 @@ class GroupStage(QDialog):
                                  "color:rgb(255, 255, 255);\n"
                                  "")
         self.team2.setAlignment(Qt.AlignCenter)
-        self.team2.setText(f'{team2} (A)')
         self.label_17 = QLabel(self.frame)
         self.label_17.setObjectName(u"label_17")
         self.label_17.setGeometry(QRect(480, 10, 111, 41))
         self.label_17.setStyleSheet(u"font: 75 12pt \"Unispace\";\n"
                                     "color:rgb(255, 255, 255);\n"
                                     "")
+        if homeAway:
+            self.team1.setText(f'(H) {team1}')
+            self.team2.setText(f'{team2} (A)')
+        else:
+            self.team2.setText(f'{team2}')
+            self.team2.setText(f'{team2}')
+
         self.label_17.setAlignment(Qt.AlignCenter)
         self.label_17.setText('VS')
         self.team1_score = QLineEdit(self.frame)
@@ -610,7 +506,7 @@ class GroupStage(QDialog):
                                        "QLineEdit:focus{\n"
                                        "border: 2px solid #FBAD25;\n"
                                        "}")
-        self.team1_score.setText(score1)
+        self.team1_score.setText('-')
         self.team1_score.setAlignment(Qt.AlignCenter)
         self.team2_score = QLineEdit(self.frame)
         self.team2_score.setObjectName(u"team2_score")
@@ -626,303 +522,11 @@ class GroupStage(QDialog):
                                        "QLineEdit:focus{\n"
                                        "border: 2px solid #FBAD25;\n"
                                        "}")
-        self.team2_score.setText(score2)
+        self.team2_score.setText('-')
         self.team2_score.setAlignment(Qt.AlignCenter)
 
-        self.verticalLayout_4.addWidget(self.frame)
-        self.verticalLayout_4.setSpacing(50)
-
-    def createRound16Frame(self, team1, team2, score1='-', score2='-'):
-        frame_name = 'Match_' + str(self.matches)
-        self.matches += 1
-        self.frame = QFrame(self.round16Widget)
-        self.frame.setObjectName(frame_name)
-        sizePolicy2 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
-        self.frame.setSizePolicy(sizePolicy2)
-        self.frame.setMinimumSize(QSize(100, 65))
-        self.frame.setFrameShape(QFrame.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Raised)
-        self.team1 = QLabel(self.frame)
-        self.team1.setObjectName(u"team1")
-        self.team1.setGeometry(QRect(40, 10, 351, 41))
-        self.team1.setStyleSheet(u"font: 75 12pt \"Unispace\";\n"
-                                 "color:rgb(255, 255, 255);\n"
-                                 "")
-        self.team1.setAlignment(Qt.AlignCenter)
-        self.team1.setText(f'{team1}')
-        self.team2 = QLabel(self.frame)
-        self.team2.setObjectName(u"team2")
-        self.team2.setGeometry(QRect(680, 10, 351, 41))
-        self.team2.setStyleSheet(u"font: 75 12pt \"Unispace\";\n"
-                                 "color:rgb(255, 255, 255);\n"
-                                 "")
-        self.team2.setAlignment(Qt.AlignCenter)
-        self.team2.setText(f'{team2}')
-        self.label_17 = QLabel(self.frame)
-        self.label_17.setObjectName(u"label_17")
-        self.label_17.setGeometry(QRect(480, 10, 111, 41))
-        self.label_17.setStyleSheet(u"font: 75 12pt \"Unispace\";\n"
-                                    "color:rgb(255, 255, 255);\n"
-                                    "")
-        self.label_17.setAlignment(Qt.AlignCenter)
-        self.label_17.setText('VS')
-        self.team1_score = QLineEdit(self.frame)
-        self.team1_score.setObjectName(u"team1_score")
-        self.team1_score.setGeometry(QRect(390, 10, 91, 41))
-        self.team1_score.setStyleSheet(u"QLineEdit{\n"
-                                       "background: #F8EAFF;\n"
-                                       "border: 2px solid #803CE0;\n"
-                                       "border-radius: 10px;\n"
-                                       "color:#803CE0;\n"
-                                       "font-family: Arial;\n"
-                                       "font: 11pt;\n"
-                                       "}\n"
-                                       "QLineEdit:focus{\n"
-                                       "border: 2px solid #FBAD25;\n"
-                                       "}")
-        self.team1_score.setText(score1)
-        self.team1_score.setAlignment(Qt.AlignCenter)
-        self.team2_score = QLineEdit(self.frame)
-        self.team2_score.setObjectName(u"team2_score")
-        self.team2_score.setGeometry(QRect(590, 10, 91, 41))
-        self.team2_score.setStyleSheet(u"QLineEdit{\n"
-                                       "background: #F8EAFF;\n"
-                                       "border: 2px solid #803CE0;\n"
-                                       "border-radius: 10px;\n"
-                                       "color:#803CE0;\n"
-                                       "font-family: Arial;\n"
-                                       "font: 11pt;\n"
-                                       "}\n"
-                                       "QLineEdit:focus{\n"
-                                       "border: 2px solid #FBAD25;\n"
-                                       "}")
-        self.team2_score.setText(score2)
-        self.team2_score.setAlignment(Qt.AlignCenter)
-
-        self.round16Layout.addWidget(self.frame)
-        self.round16Layout.setSpacing(50)
-
-    def createQuarterFrame(self, team1, team2, score1='-', score2='-'):
-        frame_name = 'Match_' + str(self.matches)
-        self.matches += 1
-        self.frame = QFrame(self.round16Widget)
-        self.frame.setObjectName(frame_name)
-        sizePolicy2 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
-        self.frame.setSizePolicy(sizePolicy2)
-        self.frame.setMinimumSize(QSize(100, 65))
-        self.frame.setFrameShape(QFrame.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Raised)
-        self.team1 = QLabel(self.frame)
-        self.team1.setObjectName(u"team1")
-        self.team1.setGeometry(QRect(40, 10, 351, 41))
-        self.team1.setStyleSheet(u"font: 75 12pt \"Unispace\";\n"
-                                 "color:rgb(255, 255, 255);\n"
-                                 "")
-        self.team1.setAlignment(Qt.AlignCenter)
-        self.team1.setText(f'{team1}')
-        self.team2 = QLabel(self.frame)
-        self.team2.setObjectName(u"team2")
-        self.team2.setGeometry(QRect(680, 10, 351, 41))
-        self.team2.setStyleSheet(u"font: 75 12pt \"Unispace\";\n"
-                                 "color:rgb(255, 255, 255);\n"
-                                 "")
-        self.team2.setAlignment(Qt.AlignCenter)
-        self.team2.setText(f'{team2}')
-        self.label_17 = QLabel(self.frame)
-        self.label_17.setObjectName(u"label_17")
-        self.label_17.setGeometry(QRect(480, 10, 111, 41))
-        self.label_17.setStyleSheet(u"font: 75 12pt \"Unispace\";\n"
-                                    "color:rgb(255, 255, 255);\n"
-                                    "")
-        self.label_17.setAlignment(Qt.AlignCenter)
-        self.label_17.setText('VS')
-        self.team1_score = QLineEdit(self.frame)
-        self.team1_score.setObjectName(u"team1_score")
-        self.team1_score.setGeometry(QRect(390, 10, 91, 41))
-        self.team1_score.setStyleSheet(u"QLineEdit{\n"
-                                       "background: #F8EAFF;\n"
-                                       "border: 2px solid #803CE0;\n"
-                                       "border-radius: 10px;\n"
-                                       "color:#803CE0;\n"
-                                       "font-family: Arial;\n"
-                                       "font: 11pt;\n"
-                                       "}\n"
-                                       "QLineEdit:focus{\n"
-                                       "border: 2px solid #FBAD25;\n"
-                                       "}")
-        self.team1_score.setText(score1)
-        self.team1_score.setAlignment(Qt.AlignCenter)
-        self.team2_score = QLineEdit(self.frame)
-        self.team2_score.setObjectName(u"team2_score")
-        self.team2_score.setGeometry(QRect(590, 10, 91, 41))
-        self.team2_score.setStyleSheet(u"QLineEdit{\n"
-                                       "background: #F8EAFF;\n"
-                                       "border: 2px solid #803CE0;\n"
-                                       "border-radius: 10px;\n"
-                                       "color:#803CE0;\n"
-                                       "font-family: Arial;\n"
-                                       "font: 11pt;\n"
-                                       "}\n"
-                                       "QLineEdit:focus{\n"
-                                       "border: 2px solid #FBAD25;\n"
-                                       "}")
-        self.team2_score.setText(score2)
-        self.team2_score.setAlignment(Qt.AlignCenter)
-
-        self.quarterLayout.addWidget(self.frame)
-        self.quarterLayout.setSpacing(50)
-
-    def createSemiFrame(self, team1, team2, score1='-', score2='-'):
-        frame_name = 'Match_' + str(self.matches)
-        self.matches += 1
-        self.frame = QFrame(self.round16Widget)
-        self.frame.setObjectName(frame_name)
-        sizePolicy2 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
-        self.frame.setSizePolicy(sizePolicy2)
-        self.frame.setMinimumSize(QSize(100, 65))
-        self.frame.setFrameShape(QFrame.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Raised)
-        self.team1 = QLabel(self.frame)
-        self.team1.setObjectName(u"team1")
-        self.team1.setGeometry(QRect(40, 10, 351, 41))
-        self.team1.setStyleSheet(u"font: 75 12pt \"Unispace\";\n"
-                                 "color:rgb(255, 255, 255);\n"
-                                 "")
-        self.team1.setAlignment(Qt.AlignCenter)
-        self.team1.setText(f'{team1}')
-        self.team2 = QLabel(self.frame)
-        self.team2.setObjectName(u"team2")
-        self.team2.setGeometry(QRect(680, 10, 351, 41))
-        self.team2.setStyleSheet(u"font: 75 12pt \"Unispace\";\n"
-                                 "color:rgb(255, 255, 255);\n"
-                                 "")
-        self.team2.setAlignment(Qt.AlignCenter)
-        self.team2.setText(f'{team2}')
-        self.label_17 = QLabel(self.frame)
-        self.label_17.setObjectName(u"label_17")
-        self.label_17.setGeometry(QRect(480, 10, 111, 41))
-        self.label_17.setStyleSheet(u"font: 75 12pt \"Unispace\";\n"
-                                    "color:rgb(255, 255, 255);\n"
-                                    "")
-        self.label_17.setAlignment(Qt.AlignCenter)
-        self.label_17.setText('VS')
-        self.team1_score = QLineEdit(self.frame)
-        self.team1_score.setObjectName(u"team1_score")
-        self.team1_score.setGeometry(QRect(390, 10, 91, 41))
-        self.team1_score.setStyleSheet(u"QLineEdit{\n"
-                                       "background: #F8EAFF;\n"
-                                       "border: 2px solid #803CE0;\n"
-                                       "border-radius: 10px;\n"
-                                       "color:#803CE0;\n"
-                                       "font-family: Arial;\n"
-                                       "font: 11pt;\n"
-                                       "}\n"
-                                       "QLineEdit:focus{\n"
-                                       "border: 2px solid #FBAD25;\n"
-                                       "}")
-        self.team1_score.setText(score1)
-        self.team1_score.setAlignment(Qt.AlignCenter)
-        self.team2_score = QLineEdit(self.frame)
-        self.team2_score.setObjectName(u"team2_score")
-        self.team2_score.setGeometry(QRect(590, 10, 91, 41))
-        self.team2_score.setStyleSheet(u"QLineEdit{\n"
-                                       "background: #F8EAFF;\n"
-                                       "border: 2px solid #803CE0;\n"
-                                       "border-radius: 10px;\n"
-                                       "color:#803CE0;\n"
-                                       "font-family: Arial;\n"
-                                       "font: 11pt;\n"
-                                       "}\n"
-                                       "QLineEdit:focus{\n"
-                                       "border: 2px solid #FBAD25;\n"
-                                       "}")
-        self.team2_score.setText(score2)
-        self.team2_score.setAlignment(Qt.AlignCenter)
-
-        self.semiLayout.addWidget(self.frame)
-        self.semiLayout.setSpacing(50)
-
-    def createFinalFrame(self, team1, team2, score1='-', score2='-'):
-        frame_name = 'Match_' + str(self.matches)
-        self.matches += 1
-        self.frame = QFrame(self.round16Widget)
-        self.frame.setObjectName(frame_name)
-        sizePolicy2 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
-        self.frame.setSizePolicy(sizePolicy2)
-        self.frame.setMinimumSize(QSize(100, 65))
-        self.frame.setFrameShape(QFrame.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Raised)
-        self.team1 = QLabel(self.frame)
-        self.team1.setObjectName(u"team1")
-        self.team1.setGeometry(QRect(40, 10, 351, 41))
-        self.team1.setStyleSheet(u"font: 75 12pt \"Unispace\";\n"
-                                 "color:rgb(255, 255, 255);\n"
-                                 "")
-        self.team1.setAlignment(Qt.AlignCenter)
-        self.team1.setText(f'{team1}')
-        self.team2 = QLabel(self.frame)
-        self.team2.setObjectName(u"team2")
-        self.team2.setGeometry(QRect(680, 10, 351, 41))
-        self.team2.setStyleSheet(u"font: 75 12pt \"Unispace\";\n"
-                                 "color:rgb(255, 255, 255);\n"
-                                 "")
-        self.team2.setAlignment(Qt.AlignCenter)
-        self.team2.setText(f'{team2}')
-        self.label_17 = QLabel(self.frame)
-        self.label_17.setObjectName(u"label_17")
-        self.label_17.setGeometry(QRect(480, 10, 111, 41))
-        self.label_17.setStyleSheet(u"font: 75 12pt \"Unispace\";\n"
-                                    "color:rgb(255, 255, 255);\n"
-                                    "")
-        self.label_17.setAlignment(Qt.AlignCenter)
-        self.label_17.setText('VS')
-        self.team1_score = QLineEdit(self.frame)
-        self.team1_score.setObjectName(u"team1_score")
-        self.team1_score.setGeometry(QRect(390, 10, 91, 41))
-        self.team1_score.setStyleSheet(u"QLineEdit{\n"
-                                       "background: #F8EAFF;\n"
-                                       "border: 2px solid #803CE0;\n"
-                                       "border-radius: 10px;\n"
-                                       "color:#803CE0;\n"
-                                       "font-family: Arial;\n"
-                                       "font: 11pt;\n"
-                                       "}\n"
-                                       "QLineEdit:focus{\n"
-                                       "border: 2px solid #FBAD25;\n"
-                                       "}")
-        self.team1_score.setText(score1)
-        self.team1_score.setAlignment(Qt.AlignCenter)
-        self.team2_score = QLineEdit(self.frame)
-        self.team2_score.setObjectName(u"team2_score")
-        self.team2_score.setGeometry(QRect(590, 10, 91, 41))
-        self.team2_score.setStyleSheet(u"QLineEdit{\n"
-                                       "background: #F8EAFF;\n"
-                                       "border: 2px solid #803CE0;\n"
-                                       "border-radius: 10px;\n"
-                                       "color:#803CE0;\n"
-                                       "font-family: Arial;\n"
-                                       "font: 11pt;\n"
-                                       "}\n"
-                                       "QLineEdit:focus{\n"
-                                       "border: 2px solid #FBAD25;\n"
-                                       "}")
-        self.team2_score.setText(score2)
-        self.team2_score.setAlignment(Qt.AlignCenter)
-
-        self.finalLayout.addWidget(self.frame)
-        self.finalLayout.setSpacing(50)
+        widget.addWidget(self.frame)
+        widget.setSpacing(50)
 
 
 # Main
