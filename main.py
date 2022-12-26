@@ -4,6 +4,9 @@
 #       2- Ahmed Alaa el-din    13
 #       3- Ehab Tarek Shokri    34
 #       4- Ziad Mosaad El-sayed 48
+#       python version python 3.10.1
+#       you must first type "pip install PyQt5" and "pip install PyQt5-tools "in the cmd
+
 
 
 import sys
