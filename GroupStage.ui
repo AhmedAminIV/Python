@@ -39,8 +39,11 @@
      <property name="styleSheet">
       <string notr="true"/>
      </property>
+     <property name="tabShape">
+      <enum>QTabWidget::Triangular</enum>
+     </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="tabsClosable">
       <bool>false</bool>
@@ -55,319 +58,21 @@
       <attribute name="title">
        <string>Groups</string>
       </attribute>
-      <widget class="QWidget" name="GroupsWidget" native="true">
-       <property name="geometry">
-        <rect>
-         <x>-10</x>
-         <y>-40</y>
-         <width>1211</width>
-         <height>881</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QWidget#GroupsWidget{
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QWidget" name="GroupsWidget" native="true">
+         <property name="styleSheet">
+          <string notr="true">QWidget#GroupsWidget{
 background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(110, 236, 255, 67), stop:0.115789 rgba(112, 186, 255, 145), stop:0.252632 rgba(157, 212, 255, 69), stop:0.263158 rgba(139, 224, 255, 69), stop:0.336842 rgba(0, 102, 255, 145), stop:0.436842 rgba(110, 94, 255, 208), stop:0.477581 rgba(143, 158, 255, 130), stop:0.484211 rgba(129, 201, 250, 130), stop:0.521053 rgba(118, 152, 255, 130), stop:0.526316 rgba(167, 255, 253, 130), stop:0.594737 rgba(130, 180, 255, 255), stop:0.684211 rgba(110, 157, 255, 69), stop:0.815789 rgba(123, 135, 255, 145), stop:0.936842 rgba(123, 171, 255, 130), stop:1 rgba(54, 131, 216, 171))
 
 
 }</string>
-       </property>
-       <widget class="QLabel" name="label_2">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>30</y>
-          <width>561</width>
-          <height>101</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 75 30pt &quot;Unispace&quot;;
-color:#803CE0;
-</string>
-        </property>
-        <property name="text">
-         <string>Group</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_3">
-        <property name="geometry">
-         <rect>
-          <x>604</x>
-          <y>30</y>
-          <width>571</width>
-          <height>101</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 75 30pt &quot;Unispace&quot;;
-color:rgb(168, 76, 100);
-</string>
-        </property>
-        <property name="text">
-         <string>stage</string>
-        </property>
-       </widget>
-       <widget class="QTableWidget" name="TableA">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>160</y>
-          <width>265</width>
-          <height>190</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QTableWidget{	
-border: 3px solid #803CE0;
-border-radius: 10px;
-color:rgb(255, 255, 255);
-font-family: Arial;
-font: 11pt;
-background-color:rgb(71, 142, 210);
-alternate-background-color:rgb(44, 94, 212);
-}</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <property name="lineWidth">
-         <number>2</number>
-        </property>
-        <property name="verticalScrollBarPolicy">
-         <enum>Qt::ScrollBarAsNeeded</enum>
-        </property>
-        <property name="horizontalScrollBarPolicy">
-         <enum>Qt::ScrollBarAsNeeded</enum>
-        </property>
-        <property name="sizeAdjustPolicy">
-         <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
-        </property>
-        <property name="editTriggers">
-         <set>QAbstractItemView::NoEditTriggers</set>
-        </property>
-        <property name="gridStyle">
-         <enum>Qt::SolidLine</enum>
-        </property>
-        <property name="rowCount">
-         <number>0</number>
-        </property>
-        <attribute name="horizontalHeaderCascadingSectionResizes">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="horizontalHeaderMinimumSectionSize">
-         <number>65</number>
-        </attribute>
-        <attribute name="horizontalHeaderDefaultSectionSize">
-         <number>118</number>
-        </attribute>
-        <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="horizontalHeaderStretchLastSection">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderStretchLastSection">
-         <bool>false</bool>
-        </attribute>
-        <column>
-         <property name="text">
-          <string>Team</string>
          </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Pts</string>
-         </property>
-         <property name="textAlignment">
-          <set>AlignLeading|AlignTop</set>
-         </property>
-        </column>
-       </widget>
-       <widget class="QLabel" name="label_7">
-        <property name="geometry">
-         <rect>
-          <x>620</x>
-          <y>440</y>
-          <width>241</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 75 20pt &quot;Unispace&quot;;
-color:rgb(52, 77, 189);
-</string>
-        </property>
-        <property name="text">
-         <string>Group G</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_9">
-        <property name="geometry">
-         <rect>
-          <x>910</x>
-          <y>120</y>
-          <width>231</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 75 20pt &quot;Unispace&quot;;
-color:rgb(52, 77, 189);
-</string>
-        </property>
-        <property name="text">
-         <string>Group D</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_10">
-        <property name="geometry">
-         <rect>
-          <x>320</x>
-          <y>110</y>
-          <width>251</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 75 20pt &quot;Unispace&quot;;
-color:rgb(52, 77, 189);
-</string>
-        </property>
-        <property name="text">
-         <string>Group B</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_11">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>110</y>
-          <width>241</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 75 20pt &quot;Unispace&quot;;
-color:rgb(52, 77, 189);
-</string>
-        </property>
-        <property name="text">
-         <string>Group A</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_12">
-        <property name="geometry">
-         <rect>
-          <x>620</x>
-          <y>120</y>
-          <width>241</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 75 20pt &quot;Unispace&quot;;
-color:rgb(52, 77, 189);
-</string>
-        </property>
-        <property name="text">
-         <string>Group C</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_13">
-        <property name="geometry">
-         <rect>
-          <x>910</x>
-          <y>440</y>
-          <width>241</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 75 20pt &quot;Unispace&quot;;
-color:rgb(52, 77, 189);
-</string>
-        </property>
-        <property name="text">
-         <string>Group H</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_8">
-        <property name="geometry">
-         <rect>
-          <x>320</x>
-          <y>440</y>
-          <width>241</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 75 20pt &quot;Unispace&quot;;
-color:rgb(52, 77, 189);
-</string>
-        </property>
-        <property name="text">
-         <string>Group F</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_14">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>440</y>
-          <width>251</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 75 20pt &quot;Unispace&quot;;
-color:rgb(52, 77, 189);
-</string>
-        </property>
-        <property name="text">
-         <string>Group E</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="backButton">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>780</y>
-          <width>141</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton{
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="3" column="0">
+           <widget class="QPushButton" name="backButton">
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
 	background-color:rgb(16, 176, 220);
 	border-radius: 10px;
 	font: 75 12pt &quot;Unispace&quot;;
@@ -377,565 +82,74 @@ color:rgb(52, 77, 189);
 QPushButton:hover{
 	background-color: rgb(193,81,241);
 }</string>
-        </property>
-        <property name="text">
-         <string>Back</string>
-        </property>
-       </widget>
-       <widget class="QTableWidget" name="TableB">
-        <property name="geometry">
-         <rect>
-          <x>310</x>
-          <y>160</y>
-          <width>265</width>
-          <height>190</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QTableWidget{	
-border: 3px solid #803CE0;
-border-radius: 10px;
-color:rgb(255, 255, 255);
-font-family: Arial;
-font: 11pt;
-background-color:rgb(71, 142, 210);
-alternate-background-color:rgb(44, 94, 212);
+            </property>
+            <property name="text">
+             <string>Back</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QScrollArea" name="scrollArea_5">
+            <property name="styleSheet">
+             <string notr="true">QWidget#groupLayout{
+background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(110, 236, 255, 67), stop:0.115789 rgba(112, 186, 255, 145), stop:0.252632 rgba(157, 212, 255, 69), stop:0.263158 rgba(139, 224, 255, 69), stop:0.336842 rgba(0, 102, 255, 145), stop:0.436842 rgba(110, 94, 255, 208), stop:0.477581 rgba(143, 158, 255, 130), stop:0.484211 rgba(129, 201, 250, 130), stop:0.521053 rgba(118, 152, 255, 130), stop:0.526316 rgba(167, 255, 253, 130), stop:0.594737 rgba(130, 180, 255, 255), stop:0.684211 rgba(110, 157, 255, 69), stop:0.815789 rgba(123, 135, 255, 145), stop:0.936842 rgba(123, 171, 255, 130), stop:1 rgba(54, 131, 216, 171))
+
+
 }</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <property name="lineWidth">
-         <number>2</number>
-        </property>
-        <property name="verticalScrollBarPolicy">
-         <enum>Qt::ScrollBarAsNeeded</enum>
-        </property>
-        <property name="horizontalScrollBarPolicy">
-         <enum>Qt::ScrollBarAsNeeded</enum>
-        </property>
-        <property name="sizeAdjustPolicy">
-         <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
-        </property>
-        <property name="editTriggers">
-         <set>QAbstractItemView::NoEditTriggers</set>
-        </property>
-        <property name="gridStyle">
-         <enum>Qt::SolidLine</enum>
-        </property>
-        <property name="rowCount">
-         <number>0</number>
-        </property>
-        <attribute name="horizontalHeaderCascadingSectionResizes">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="horizontalHeaderMinimumSectionSize">
-         <number>65</number>
-        </attribute>
-        <attribute name="horizontalHeaderDefaultSectionSize">
-         <number>118</number>
-        </attribute>
-        <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="horizontalHeaderStretchLastSection">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderStretchLastSection">
-         <bool>false</bool>
-        </attribute>
-        <column>
-         <property name="text">
-          <string>Team</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Pts</string>
-         </property>
-         <property name="textAlignment">
-          <set>AlignLeading|AlignTop</set>
-         </property>
-        </column>
-       </widget>
-       <widget class="QTableWidget" name="TableC">
-        <property name="geometry">
-         <rect>
-          <x>610</x>
-          <y>160</y>
-          <width>265</width>
-          <height>190</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QTableWidget{	
-border: 3px solid #803CE0;
-border-radius: 10px;
-color:rgb(255, 255, 255);
-font-family: Arial;
-font: 11pt;
-background-color:rgb(71, 142, 210);
-alternate-background-color:rgb(44, 94, 212);
-}</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <property name="lineWidth">
-         <number>2</number>
-        </property>
-        <property name="verticalScrollBarPolicy">
-         <enum>Qt::ScrollBarAsNeeded</enum>
-        </property>
-        <property name="horizontalScrollBarPolicy">
-         <enum>Qt::ScrollBarAsNeeded</enum>
-        </property>
-        <property name="sizeAdjustPolicy">
-         <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
-        </property>
-        <property name="editTriggers">
-         <set>QAbstractItemView::NoEditTriggers</set>
-        </property>
-        <property name="gridStyle">
-         <enum>Qt::SolidLine</enum>
-        </property>
-        <property name="rowCount">
-         <number>0</number>
-        </property>
-        <attribute name="horizontalHeaderCascadingSectionResizes">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="horizontalHeaderMinimumSectionSize">
-         <number>65</number>
-        </attribute>
-        <attribute name="horizontalHeaderDefaultSectionSize">
-         <number>118</number>
-        </attribute>
-        <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="horizontalHeaderStretchLastSection">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderStretchLastSection">
-         <bool>false</bool>
-        </attribute>
-        <column>
-         <property name="text">
-          <string>Team</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Pts</string>
-         </property>
-         <property name="textAlignment">
-          <set>AlignLeading|AlignTop</set>
-         </property>
-        </column>
-       </widget>
-       <widget class="QTableWidget" name="TableD">
-        <property name="geometry">
-         <rect>
-          <x>900</x>
-          <y>160</y>
-          <width>265</width>
-          <height>190</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QTableWidget{	
-border: 3px solid #803CE0;
-border-radius: 10px;
-color:rgb(255, 255, 255);
-font-family: Arial;
-font: 11pt;
-background-color:rgb(71, 142, 210);
-alternate-background-color:rgb(44, 94, 212);
-}</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <property name="lineWidth">
-         <number>2</number>
-        </property>
-        <property name="verticalScrollBarPolicy">
-         <enum>Qt::ScrollBarAsNeeded</enum>
-        </property>
-        <property name="horizontalScrollBarPolicy">
-         <enum>Qt::ScrollBarAsNeeded</enum>
-        </property>
-        <property name="sizeAdjustPolicy">
-         <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
-        </property>
-        <property name="editTriggers">
-         <set>QAbstractItemView::NoEditTriggers</set>
-        </property>
-        <property name="gridStyle">
-         <enum>Qt::SolidLine</enum>
-        </property>
-        <property name="rowCount">
-         <number>0</number>
-        </property>
-        <attribute name="horizontalHeaderCascadingSectionResizes">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="horizontalHeaderMinimumSectionSize">
-         <number>65</number>
-        </attribute>
-        <attribute name="horizontalHeaderDefaultSectionSize">
-         <number>118</number>
-        </attribute>
-        <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="horizontalHeaderStretchLastSection">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderStretchLastSection">
-         <bool>false</bool>
-        </attribute>
-        <column>
-         <property name="text">
-          <string>Team</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Pts</string>
-         </property>
-         <property name="textAlignment">
-          <set>AlignLeading|AlignTop</set>
-         </property>
-        </column>
-       </widget>
-       <widget class="QTableWidget" name="TableE">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>490</y>
-          <width>265</width>
-          <height>190</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QTableWidget{	
-border: 3px solid #803CE0;
-border-radius: 10px;
-color:rgb(255, 255, 255);
-font-family: Arial;
-font: 11pt;
-background-color:rgb(71, 142, 210);
-alternate-background-color:rgb(44, 94, 212);
-}</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <property name="lineWidth">
-         <number>2</number>
-        </property>
-        <property name="verticalScrollBarPolicy">
-         <enum>Qt::ScrollBarAsNeeded</enum>
-        </property>
-        <property name="horizontalScrollBarPolicy">
-         <enum>Qt::ScrollBarAsNeeded</enum>
-        </property>
-        <property name="sizeAdjustPolicy">
-         <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
-        </property>
-        <property name="editTriggers">
-         <set>QAbstractItemView::NoEditTriggers</set>
-        </property>
-        <property name="gridStyle">
-         <enum>Qt::SolidLine</enum>
-        </property>
-        <property name="rowCount">
-         <number>0</number>
-        </property>
-        <attribute name="horizontalHeaderCascadingSectionResizes">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="horizontalHeaderMinimumSectionSize">
-         <number>65</number>
-        </attribute>
-        <attribute name="horizontalHeaderDefaultSectionSize">
-         <number>118</number>
-        </attribute>
-        <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="horizontalHeaderStretchLastSection">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderStretchLastSection">
-         <bool>false</bool>
-        </attribute>
-        <column>
-         <property name="text">
-          <string>Team</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Pts</string>
-         </property>
-         <property name="textAlignment">
-          <set>AlignLeading|AlignTop</set>
-         </property>
-        </column>
-       </widget>
-       <widget class="QTableWidget" name="TableF">
-        <property name="geometry">
-         <rect>
-          <x>310</x>
-          <y>490</y>
-          <width>265</width>
-          <height>190</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QTableWidget{	
-border: 3px solid #803CE0;
-border-radius: 10px;
-color:rgb(255, 255, 255);
-font-family: Arial;
-font: 11pt;
-background-color:rgb(71, 142, 210);
-alternate-background-color:rgb(44, 94, 212);
-}</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <property name="lineWidth">
-         <number>2</number>
-        </property>
-        <property name="verticalScrollBarPolicy">
-         <enum>Qt::ScrollBarAsNeeded</enum>
-        </property>
-        <property name="horizontalScrollBarPolicy">
-         <enum>Qt::ScrollBarAsNeeded</enum>
-        </property>
-        <property name="sizeAdjustPolicy">
-         <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
-        </property>
-        <property name="editTriggers">
-         <set>QAbstractItemView::NoEditTriggers</set>
-        </property>
-        <property name="gridStyle">
-         <enum>Qt::SolidLine</enum>
-        </property>
-        <property name="rowCount">
-         <number>0</number>
-        </property>
-        <attribute name="horizontalHeaderCascadingSectionResizes">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="horizontalHeaderMinimumSectionSize">
-         <number>65</number>
-        </attribute>
-        <attribute name="horizontalHeaderDefaultSectionSize">
-         <number>118</number>
-        </attribute>
-        <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="horizontalHeaderStretchLastSection">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderStretchLastSection">
-         <bool>false</bool>
-        </attribute>
-        <column>
-         <property name="text">
-          <string>Team</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Pts</string>
-         </property>
-         <property name="textAlignment">
-          <set>AlignLeading|AlignTop</set>
-         </property>
-        </column>
-       </widget>
-       <widget class="QTableWidget" name="TableG">
-        <property name="geometry">
-         <rect>
-          <x>610</x>
-          <y>490</y>
-          <width>265</width>
-          <height>190</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QTableWidget{	
-border: 3px solid #803CE0;
-border-radius: 10px;
-color:rgb(255, 255, 255);
-font-family: Arial;
-font: 11pt;
-background-color:rgb(71, 142, 210);
-alternate-background-color:rgb(44, 94, 212);
-}</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <property name="lineWidth">
-         <number>2</number>
-        </property>
-        <property name="verticalScrollBarPolicy">
-         <enum>Qt::ScrollBarAsNeeded</enum>
-        </property>
-        <property name="horizontalScrollBarPolicy">
-         <enum>Qt::ScrollBarAsNeeded</enum>
-        </property>
-        <property name="sizeAdjustPolicy">
-         <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
-        </property>
-        <property name="editTriggers">
-         <set>QAbstractItemView::NoEditTriggers</set>
-        </property>
-        <property name="gridStyle">
-         <enum>Qt::SolidLine</enum>
-        </property>
-        <property name="rowCount">
-         <number>0</number>
-        </property>
-        <attribute name="horizontalHeaderCascadingSectionResizes">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="horizontalHeaderMinimumSectionSize">
-         <number>65</number>
-        </attribute>
-        <attribute name="horizontalHeaderDefaultSectionSize">
-         <number>118</number>
-        </attribute>
-        <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="horizontalHeaderStretchLastSection">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderStretchLastSection">
-         <bool>false</bool>
-        </attribute>
-        <column>
-         <property name="text">
-          <string>Team</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Pts</string>
-         </property>
-         <property name="textAlignment">
-          <set>AlignLeading|AlignTop</set>
-         </property>
-        </column>
-       </widget>
-       <widget class="QTableWidget" name="TableH">
-        <property name="geometry">
-         <rect>
-          <x>900</x>
-          <y>490</y>
-          <width>265</width>
-          <height>190</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QTableWidget{	
-border: 3px solid #803CE0;
-border-radius: 10px;
-color:rgb(255, 255, 255);
-font-family: Arial;
-font: 11pt;
-background-color:rgb(71, 142, 210);
-alternate-background-color:rgb(44, 94, 212);
-}</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <property name="lineWidth">
-         <number>2</number>
-        </property>
-        <property name="verticalScrollBarPolicy">
-         <enum>Qt::ScrollBarAsNeeded</enum>
-        </property>
-        <property name="horizontalScrollBarPolicy">
-         <enum>Qt::ScrollBarAsNeeded</enum>
-        </property>
-        <property name="sizeAdjustPolicy">
-         <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
-        </property>
-        <property name="editTriggers">
-         <set>QAbstractItemView::AllEditTriggers</set>
-        </property>
-        <property name="gridStyle">
-         <enum>Qt::SolidLine</enum>
-        </property>
-        <property name="rowCount">
-         <number>0</number>
-        </property>
-        <attribute name="horizontalHeaderCascadingSectionResizes">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="horizontalHeaderMinimumSectionSize">
-         <number>65</number>
-        </attribute>
-        <attribute name="horizontalHeaderDefaultSectionSize">
-         <number>118</number>
-        </attribute>
-        <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="horizontalHeaderStretchLastSection">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderStretchLastSection">
-         <bool>false</bool>
-        </attribute>
-        <column>
-         <property name="text">
-          <string>Team</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Pts</string>
-         </property>
-         <property name="textAlignment">
-          <set>AlignLeading|AlignTop</set>
-         </property>
-        </column>
-       </widget>
-      </widget>
+            </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAsNeeded</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="groupLayout">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>1162</width>
+               <height>670</height>
+              </rect>
+             </property>
+             <layout class="QGridLayout" name="groupsLayout"/>
+            </widget>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="styleSheet">
+             <string notr="true">font: 75 30pt &quot;Unispace&quot;;
+color:#803CE0;
+</string>
+            </property>
+            <property name="text">
+             <string>Group</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_3">
+            <property name="styleSheet">
+             <string notr="true">font: 75 30pt &quot;Unispace&quot;;
+color:rgb(168, 76, 100);
+</string>
+            </property>
+            <property name="text">
+             <string>stage</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="MatchesTab">
       <attribute name="title">
@@ -971,7 +185,7 @@ background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471,
                <x>0</x>
                <y>0</y>
                <width>1162</width>
-               <height>730</height>
+               <height>736</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="matchesLayout"/>
@@ -998,6 +212,122 @@ QPushButton:hover{
            </widget>
           </item>
          </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="round32">
+      <attribute name="title">
+       <string>Round of 32</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_10">
+       <item>
+        <widget class="QScrollArea" name="scrollArea_6">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471, y2:0.403636, stop:0 rgba(255, 255, 255, 255), stop:0.0105263 rgba(255, 255, 255, 255), stop:0.652632 rgba(0, 135, 181, 244))</string>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="round32Widget">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>1180</width>
+            <height>754</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_16">
+           <item>
+            <layout class="QVBoxLayout" name="round32Layout"/>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="round32Save">
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+	background-color:rgb(16, 176, 220);
+	border-radius: 10px;
+	font: 75 12pt &quot;Unispace&quot;;
+	color: white;
+
+}
+QPushButton:hover{
+	background-color: rgb(193,81,241);
+}</string>
+         </property>
+         <property name="text">
+          <string>Save data</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="qualification">
+      <attribute name="title">
+       <string>Qualifications</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_12">
+       <item>
+        <widget class="QScrollArea" name="scrollArea_7">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471, y2:0.403636, stop:0 rgba(255, 255, 255, 255), stop:0.0105263 rgba(255, 255, 255, 255), stop:0.652632 rgba(0, 135, 181, 244))</string>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="qualificationWidget">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>1180</width>
+            <height>754</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_14">
+           <item>
+            <layout class="QVBoxLayout" name="qualificationLayout"/>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="qualificationSave">
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+	background-color:rgb(16, 176, 220);
+	border-radius: 10px;
+	font: 75 12pt &quot;Unispace&quot;;
+	color: white;
+
+}
+QPushButton:hover{
+	background-color: rgb(193,81,241);
+}</string>
+         </property>
+         <property name="text">
+          <string>Save data</string>
+         </property>
         </widget>
        </item>
       </layout>
@@ -1030,7 +360,7 @@ background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471,
                <x>0</x>
                <y>0</y>
                <width>1162</width>
-               <height>730</height>
+               <height>736</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -1044,7 +374,7 @@ background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471,
           <item>
            <widget class="QPushButton" name="round16Save">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton{
@@ -1088,7 +418,7 @@ background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471,
             <x>0</x>
             <y>0</y>
             <width>1180</width>
-            <height>748</height>
+            <height>754</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -1102,7 +432,7 @@ background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471,
        <item>
         <widget class="QPushButton" name="quarterSave">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="styleSheet">
           <string notr="true">QPushButton{
@@ -1143,7 +473,7 @@ background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471,
             <x>0</x>
             <y>0</y>
             <width>1180</width>
-            <height>748</height>
+            <height>754</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -1157,7 +487,7 @@ background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471,
        <item>
         <widget class="QPushButton" name="semiSave">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="styleSheet">
           <string notr="true">QPushButton{
@@ -1198,7 +528,7 @@ background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471,
             <x>0</x>
             <y>0</y>
             <width>1180</width>
-            <height>748</height>
+            <height>754</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_11">
@@ -1212,7 +542,7 @@ background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471,
        <item>
         <widget class="QPushButton" name="finalSave">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="styleSheet">
           <string notr="true">QPushButton{

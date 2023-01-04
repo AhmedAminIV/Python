@@ -284,9 +284,9 @@ color: Red;</string>
    <widget class="QLabel" name="groupError">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>0</x>
       <y>640</y>
-      <width>321</width>
+      <width>341</width>
       <height>51</height>
      </rect>
     </property>
@@ -362,7 +362,7 @@ color:rgb(225, 43, 116);
 </string>
     </property>
     <property name="text">
-     <string>2 Teams</string>
+     <string>Teams</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_5">
@@ -380,7 +380,7 @@ color:rgb(52, 77, 189);
 </string>
     </property>
     <property name="text">
-     <string>Insert 3</string>
+     <string>Insert</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -434,6 +434,31 @@ QPushButton:hover{
     </property>
     <property name="text">
      <string>Next</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="createLeagueButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>740</y>
+      <width>301</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+	background-color:rgb(71, 142, 255);
+	border-radius: 10px;
+	font: 75 16pt &quot;Unispace&quot;;
+	color: white;
+
+}
+QPushButton:hover{
+	background-color: rgb(193,81,241);
+}</string>
+    </property>
+    <property name="text">
+     <string>Create League</string>
     </property>
    </widget>
   </widget>

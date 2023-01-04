@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GroupStage</class>
+ <widget class="QDialog" name="GroupStage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1224</width>
+    <height>865</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <widget class="QTabWidget" name="Groups">
+     <property name="font">
+      <font>
+       <family>Reem Kufi</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="autoFillBackground">
+      <bool>true</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <property name="tabsClosable">
+      <bool>false</bool>
+     </property>
+     <property name="movable">
+      <bool>false</bool>
+     </property>
+     <property name="tabBarAutoHide">
+      <bool>false</bool>
+     </property>
+     <widget class="QWidget" name="GroupsTab">
+      <attribute name="title">
+       <string>Groups</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_10">
+       <item>
+        <widget class="QWidget" name="GroupsWidget" native="true">
+         <property name="styleSheet">
+          <string notr="true">QWidget#GroupsWidget{
+background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(110, 236, 255, 67), stop:0.115789 rgba(112, 186, 255, 145), stop:0.252632 rgba(157, 212, 255, 69), stop:0.263158 rgba(139, 224, 255, 69), stop:0.336842 rgba(0, 102, 255, 145), stop:0.436842 rgba(110, 94, 255, 208), stop:0.477581 rgba(143, 158, 255, 130), stop:0.484211 rgba(129, 201, 250, 130), stop:0.521053 rgba(118, 152, 255, 130), stop:0.526316 rgba(167, 255, 253, 130), stop:0.594737 rgba(130, 180, 255, 255), stop:0.684211 rgba(110, 157, 255, 69), stop:0.815789 rgba(123, 135, 255, 145), stop:0.936842 rgba(123, 171, 255, 130), stop:1 rgba(54, 131, 216, 171))
+
+
+}</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QLabel" name="label_11">
+            <property name="styleSheet">
+             <string notr="true">font: 75 20pt &quot;Unispace&quot;;
+color:rgb(52, 77, 189);
+</string>
+            </property>
+            <property name="text">
+             <string>lEAGUE TABLE</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QTableWidget" name="Table">
+            <property name="styleSheet">
+             <string notr="true">QTableWidget{	
+border: 3px solid #803CE0;
+border-radius: 10px;
+color:rgb(255, 255, 255);
+font-family: Arial;
+font: 11pt;
+background-color:rgb(71, 142, 210);
+alternate-background-color:rgb(44, 94, 212);
+}</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <property name="lineWidth">
+             <number>2</number>
+            </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAsNeeded</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="sizeAdjustPolicy">
+             <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <property name="gridStyle">
+             <enum>Qt::SolidLine</enum>
+            </property>
+            <property name="rowCount">
+             <number>0</number>
+            </property>
+            <property name="columnCount">
+             <number>9</number>
+            </property>
+            <attribute name="horizontalHeaderCascadingSectionResizes">
+             <bool>true</bool>
+            </attribute>
+            <attribute name="horizontalHeaderMinimumSectionSize">
+             <number>65</number>
+            </attribute>
+            <attribute name="horizontalHeaderDefaultSectionSize">
+             <number>65</number>
+            </attribute>
+            <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+             <bool>false</bool>
+            </attribute>
+            <attribute name="horizontalHeaderStretchLastSection">
+             <bool>false</bool>
+            </attribute>
+            <attribute name="verticalHeaderStretchLastSection">
+             <bool>false</bool>
+            </attribute>
+            <column>
+             <property name="text">
+              <string>Team</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>MP</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>W</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>D</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>L</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>GF</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>GA</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>GD</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Pts</string>
+             </property>
+             <property name="textAlignment">
+              <set>AlignLeading|AlignTop</set>
+             </property>
+            </column>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="MatchesTab">
+      <attribute name="title">
+       <string>Matches</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QWidget" name="MatchesWidget" native="true">
+         <property name="styleSheet">
+          <string notr="true">QWidget#MatchesWidget{
+background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(110, 236, 255, 67), stop:0.115789 rgba(112, 186, 255, 145), stop:0.252632 rgba(157, 212, 255, 69), stop:0.263158 rgba(139, 224, 255, 69), stop:0.336842 rgba(0, 102, 255, 145), stop:0.436842 rgba(110, 94, 255, 208), stop:0.477581 rgba(143, 158, 255, 130), stop:0.484211 rgba(129, 201, 250, 130), stop:0.521053 rgba(118, 152, 255, 130), stop:0.526316 rgba(167, 255, 253, 130), stop:0.594737 rgba(130, 180, 255, 255), stop:0.684211 rgba(110, 157, 255, 69), stop:0.815789 rgba(123, 135, 255, 145), stop:0.936842 rgba(123, 171, 255, 130), stop:1 rgba(54, 131, 216, 171))
+}</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QScrollArea" name="scrollArea">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">
+background-color:qlineargradient(spread:pad, x1:0.467602, y1:0.994136, x2:0.471, y2:0.403636, stop:0 rgba(255, 255, 255, 255), stop:0.0105263 rgba(255, 255, 255, 255), stop:0.652632 rgba(0, 135, 181, 244))</string>
+            </property>
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="matchesWidget">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>1162</width>
+               <height>730</height>
+              </rect>
+             </property>
+             <layout class="QVBoxLayout" name="matchesLayout"/>
+            </widget>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="matchesSave">
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+	background-color:rgb(16, 176, 220);
+	border-radius: 10px;
+	font: 75 12pt &quot;Unispace&quot;;
+	color: white;
+
+}
+QPushButton:hover{
+	background-color: rgb(193,81,241);
+}</string>
+            </property>
+            <property name="text">
+             <string>Save data</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
